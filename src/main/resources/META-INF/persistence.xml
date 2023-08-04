@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.md_BoardingHouseFindingSystem_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.md.pojo.Notification</class>
+    <class>com.md.pojo.Ward</class>
+    <class>com.md.pojo.Comment</class>
+    <class>com.md.pojo.Image</class>
+    <class>com.md.pojo.Tentant</class>
+    <class>com.md.pojo.LandLord</class>
+    <class>com.md.pojo.Room</class>
+    <class>com.md.pojo.City</class>
+    <class>com.md.pojo.PostOfTenant</class>
+    <class>com.md.pojo.User</class>
+    <class>com.md.pojo.Follow</class>
+    <class>com.md.pojo.Post</class>
+    <class>com.md.pojo.District</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://34.126.159.195:3306/BoardingHouseFindingDB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="datit02"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Admin@123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
