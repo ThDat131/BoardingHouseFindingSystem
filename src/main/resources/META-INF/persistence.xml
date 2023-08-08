@@ -15,6 +15,11 @@
     <class>com.md.pojo.Follow</class>
     <class>com.md.pojo.Post</class>
     <class>com.md.pojo.District</class>
+    <class>com.md.pojo.Provinces</class>
+    <class>com.md.pojo.Wards</class>
+    <class>com.md.pojo.AdministrativeUnits</class>
+    <class>com.md.pojo.Districts</class>
+    <class>com.md.pojo.AdministrativeRegions</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://34.126.159.195:3306/BoardingHouseFindingDB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
