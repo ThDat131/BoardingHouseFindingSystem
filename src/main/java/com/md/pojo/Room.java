@@ -5,9 +5,7 @@
 package com.md.pojo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,12 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -60,17 +56,15 @@ public class Room implements Serializable {
     @NotNull
     @Column(name = "price")
     private float price;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
-    private Collection<Post> postCollection;
-    @JoinColumn(name = "cityId", referencedColumnName = "id")
+    @JoinColumn(name = "district_id", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private City cityId;
-    @JoinColumn(name = "districtId", referencedColumnName = "id")
+    private Districts districtId;
+    @JoinColumn(name = "province_id", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private District districtId;
-    @JoinColumn(name = "wardId", referencedColumnName = "id")
+    private Provinces provinceId;
+    @JoinColumn(name = "ward_id", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Ward wardId;
+    private Wards wardId;
 
     public Room() {
     }
@@ -83,6 +77,17 @@ public class Room implements Serializable {
         this.id = id;
         this.address = address;
         this.price = price;
+    }
+
+    public Room(String id, String address, String longitude, String latitude, float price, Districts districtId, Provinces provinceId, Wards wardId) {
+        this.id = id;
+        this.address = address;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.price = price;
+        this.districtId = districtId;
+        this.provinceId = provinceId;
+        this.wardId = wardId;
     }
 
     public String getId() {
@@ -125,36 +130,27 @@ public class Room implements Serializable {
         this.price = price;
     }
 
-    @XmlTransient
-    public Collection<Post> getPostCollection() {
-        return postCollection;
-    }
-
-    public void setPostCollection(Collection<Post> postCollection) {
-        this.postCollection = postCollection;
-    }
-
-    public City getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(City cityId) {
-        this.cityId = cityId;
-    }
-
-    public District getDistrictId() {
+    public Districts getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(District districtId) {
+    public void setDistrictId(Districts districtId) {
         this.districtId = districtId;
     }
 
-    public Ward getWardId() {
+    public Provinces getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Provinces provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Wards getWardId() {
         return wardId;
     }
 
-    public void setWardId(Ward wardId) {
+    public void setWardId(Wards wardId) {
         this.wardId = wardId;
     }
 
