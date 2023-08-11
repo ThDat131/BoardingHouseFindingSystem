@@ -56,6 +56,10 @@ public class Room implements Serializable {
     @NotNull
     @Column(name = "price")
     private float price;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "acreage")
+    private float acreage;
     @JoinColumn(name = "district_id", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Districts districtId;
@@ -79,15 +83,24 @@ public class Room implements Serializable {
         this.price = price;
     }
 
-    public Room(String id, String address, String longitude, String latitude, float price, Districts districtId, Provinces provinceId, Wards wardId) {
+    public Room(String id, String address, String longitude, String latitude, float price, float acreage,Districts districtId, Provinces provinceId, Wards wardId) {
         this.id = id;
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
         this.price = price;
+        this.acreage = acreage;
         this.districtId = districtId;
         this.provinceId = provinceId;
         this.wardId = wardId;
+    }
+
+    public void setAcreage(float acreage) {
+        this.acreage = acreage;
+    }
+
+    public float getAcreage() {
+        return acreage;
     }
 
     public String getId() {

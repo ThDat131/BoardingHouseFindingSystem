@@ -19,7 +19,6 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Override
     public boolean addRoom(Room room) {
         Session session = this.factory.getObject().getCurrentSession();
-
         try {
             session.save(room);
             return true;

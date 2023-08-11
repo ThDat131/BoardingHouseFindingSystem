@@ -54,6 +54,11 @@ public class Post implements Serializable {
     private String content;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "name")
+    private String name;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -69,6 +74,14 @@ public class Post implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     private Collection<PostOfTenant> postOfTenantCollection;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Post() {
     }
