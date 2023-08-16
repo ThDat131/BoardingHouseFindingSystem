@@ -8,4 +8,5 @@ public interface UserRepository {
     List<User> getUsers();
     boolean addOrUpdateUser(User user);
     User getUserByUsername(String username);
+    boolean isUserExits(String username);
 }

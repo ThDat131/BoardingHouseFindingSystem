@@ -11,13 +11,16 @@
 <div class="container">
   <c:url value="/user" var="action" />
   <form:form modelAttribute="user" method="post" action="${action}"  enctype="multipart/form-data" >
+
     <div class="form-floating my-3">
       <form:input type="text" cssClass="form-control" id="username" placeholder="Username" name="username"  path="username"/>
       <label for="username">Username</label>
+      <form:errors path="username" element="div" cssClass="alert alert-danger mt-2" />
     </div>
     <div class="form-floating my-3">
       <form:input type="password" cssClass="form-control" id="password" placeholder="Password" name="password"  path="password"/>
       <label for="password">Mật khẩu</label>
+      <form:errors path="password" element="div" cssClass="alert alert-danger mt-2" />
     </div>
     <div class="form-floating my-3">
       <form:input type="file" cssClass="form-control" id="avatar" path="imgUrl"/>
@@ -79,7 +82,7 @@
 
       <button type="submit" class="btn btn-info">
         <c:choose>
-          <c:when test="${user.username != null}">Cập nhật user</c:when>
+          <c:when test="${user.createdDate != null}">Cập nhật user</c:when>
           <c:otherwise>Thêm user</c:otherwise>
         </c:choose>
       </button>

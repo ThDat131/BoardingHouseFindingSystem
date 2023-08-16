@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -34,29 +35,47 @@ public class UserRepositoryImpl implements UserRepository {
         q.setParameter("un", username);
         try {
             User user = (User) q.getSingleResult();
+            s.evict(user);
             return user;
         }
         catch (NoResultException ex) {
             return new User();
         }
     }
+
+    @Override
+    public boolean isUserExits(String username) {
+        Session s = this.factoryBean.getObject().getCurrentSession();
+        User user = s.find(User.class, username);
+        s.evict(user);
+        return user != null;
+    }
+
     @Override
     public boolean addOrUpdateUser(User user) {
         Session s = this.factoryBean.getObject().getCurrentSession();
+        User existedUser = getUserByUsername(user.getUsername());
         try {
-            User findedUser = getUserByUsername(user.getUsername());
-            if (findedUser.getUsername() == null)
+            if (existedUser.getUsername() == null) {
+                user.setCreatedDate(new Date());
                 s.save(user);
-            else
-            {
-                s.clear();
-                s.merge(user);
             }
+            else {
+                if (user.getPassword() == null)
+                    user.setPassword(existedUser.getPassword());
+                if (user.getAvatar() == null)
+                    user.setAvatar(existedUser.getAvatar());
+                if (user.getCreatedDate() == null)
+                    user.setCreatedDate(existedUser.getCreatedDate());
 
-            return true;
+                s.update(user);
+            }
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
+        return true;
     }
+
+
 }

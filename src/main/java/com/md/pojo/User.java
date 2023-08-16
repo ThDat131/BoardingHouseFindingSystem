@@ -4,11 +4,13 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive"),
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
 public class User implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,7 +45,6 @@ public class User implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
     @Size(min = 1, max = 200)
     @Column(name = "avatar")
     private String avatar;
@@ -60,18 +60,27 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "role")
     private int role;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Collection<Comment> commentCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Collection<Post> postCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderId")
     private Collection<Notification> notificationCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverId")
     private Collection<Notification> notificationCollection1;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Collection<LandLord> landLordCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Collection<Tentant> tentantCollection;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    private Set<Room> roomSet;
 
     public User() {
     }
@@ -224,6 +233,15 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.md.pojo.User[ username=" + username + " ]";
+    }
+
+    @XmlTransient
+    public Set<Room> getRoomSet() {
+        return roomSet;
+    }
+
+    public void setRoomSet(Set<Room> roomSet) {
+        this.roomSet = roomSet;
     }
     
 }

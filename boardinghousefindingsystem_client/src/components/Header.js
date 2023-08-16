@@ -47,6 +47,9 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link text-light" href="#">Tin tìm phòng trọ</a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link text-light" href="#">Quản lý phòng trọ</a>
+                    </li>
                 </ul>
             </div>
 

@@ -36,9 +36,13 @@ public class UserServiceImpl implements UserService {
         }
         return this.userRepository.addOrUpdateUser(user);
     }
-
     @Override
     public User getUserByUsername(String username) {
         return this.userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public boolean isUserExits(String username) {
+        return this.userRepository.isUserExits(username);
     }
 }

@@ -11,7 +11,7 @@
 <div class="container">
     <h1 class="text-center text-info">Quản lý user</h1>
     <div class="my-3">
-        <a class="btn btn-info" href="<c:url value="/user-add-or-edit" />">Thêm</a>
+        <a class="btn btn-info" href="<c:url value="/add-user" />">Thêm</a>
     </div>
     <table class="table">
         <thead>
