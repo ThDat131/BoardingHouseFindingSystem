@@ -4,6 +4,8 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,14 +27,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "Room")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByAddress", query = "SELECT r FROM Room r WHERE r.address = :address"),
     @NamedQuery(name = "Room.findByLongitude", query = "SELECT r FROM Room r WHERE r.longitude = :longitude"),
     @NamedQuery(name = "Room.findByLatitude", query = "SELECT r FROM Room r WHERE r.latitude = :latitude"),
-    @NamedQuery(name = "Room.findByPrice", query = "SELECT r FROM Room r WHERE r.price = :price")})
+    @NamedQuery(name = "Room.findByPrice", query = "SELECT r FROM Room r WHERE r.price = :price"),
+    @NamedQuery(name = "Room.findByAcreage", query = "SELECT r FROM Room r WHERE r.acreage = :acreage")})
 public class Room implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,6 +63,10 @@ public class Room implements Serializable {
     @NotNull
     @Column(name = "acreage")
     private float acreage;
+    @JsonIgnore
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    @ManyToOne(optional = false)
+    private User username;
     @JoinColumn(name = "district_id", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Districts districtId;
@@ -77,30 +84,11 @@ public class Room implements Serializable {
         this.id = id;
     }
 
-    public Room(String id, String address, float price) {
+    public Room(String id, String address, float price, float acreage) {
         this.id = id;
         this.address = address;
         this.price = price;
-    }
-
-    public Room(String id, String address, String longitude, String latitude, float price, float acreage,Districts districtId, Provinces provinceId, Wards wardId) {
-        this.id = id;
-        this.address = address;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.price = price;
         this.acreage = acreage;
-        this.districtId = districtId;
-        this.provinceId = provinceId;
-        this.wardId = wardId;
-    }
-
-    public void setAcreage(float acreage) {
-        this.acreage = acreage;
-    }
-
-    public float getAcreage() {
-        return acreage;
     }
 
     public String getId() {
@@ -141,6 +129,22 @@ public class Room implements Serializable {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public float getAcreage() {
+        return acreage;
+    }
+
+    public void setAcreage(float acreage) {
+        this.acreage = acreage;
+    }
+
+    public User getUsername() {
+        return username;
+    }
+
+    public void setUsername(User username) {
+        this.username = username;
     }
 
     public Districts getDistrictId() {

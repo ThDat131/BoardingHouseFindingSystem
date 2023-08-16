@@ -12,16 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ApiRoomController {
     @Autowired
     private RoomService roomService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private  UserService userService;
 
 
     @PostMapping(path="/room", produces = {
@@ -33,6 +37,8 @@ public class ApiRoomController {
         String provinceId = params.get("provinceId");
         String districtId = params.get("districtId");
         String wardId = params.get("wardId");
+        String username = params.get("username");
+        Float acreage = Float.parseFloat(params.get("acreage"));
 
         Room room = new Room();
         room.setId(String.valueOf(UUID.randomUUID()));
@@ -41,6 +47,8 @@ public class ApiRoomController {
         room.setProvinceId(addressService.getProvinceById(provinceId));
         room.setDistrictId(addressService.getDistrictById(districtId));
         room.setWardId(addressService.getWardById(wardId));
+        room.setUsername(userService.getUserByUsername(username));
+        room.setAcreage(acreage);
         this.roomService.addRoom(room);
         return new ResponseEntity<>(room, HttpStatus.CREATED);
     }
@@ -55,17 +63,38 @@ public class ApiRoomController {
         String provinceId = params.get("provinceId");
         String districtId = params.get("districtId");
         String wardId = params.get("wardId");
+        Float acreage = Float.parseFloat(params.get("acreage"));
+        String username = params.get("username");
 
         Room room = new Room();
         room.setId(id);
         room.setAddress(address);
         room.setPrice(price);
+        room.setAcreage(acreage);
         room.setProvinceId(addressService.getProvinceById(provinceId));
         room.setDistrictId(addressService.getDistrictById(districtId));
         room.setWardId(addressService.getWardById(wardId));
+        room.setUsername(userService.getUserByUsername(username));
         this.roomService.updateRoom(room);
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
 
+    @GetMapping("/{username}/rooms")
+    public ResponseEntity<List<Room>> getRoomsByUsername(@PathVariable(value = "username") String username) {
+        List<Room> rooms = this.roomService.getRoomsByUsername(username);
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
+    }
+
+    @DeleteMapping({"/room/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRoom(@PathVariable(value = "id") String id) {
+        this.roomService.deleteRoom(id);
+    }
+
+    @GetMapping("/room/{id}")
+    public ResponseEntity<Room> getRoomById(@PathVariable(value = "id") String id) {
+        Room room = this.roomService.getRoomById(id);
+        return new ResponseEntity<>(room, HttpStatus.OK);
+    }
 }
 

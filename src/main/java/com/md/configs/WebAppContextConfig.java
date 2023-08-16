@@ -3,6 +3,7 @@ package com.md.configs;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.md.formatters.ProvinceFormatter;
+import com.md.formatters.UserFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +57,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new ProvinceFormatter());
+        registry.addFormatter(new UserFormatter());
     }
 
     @Bean

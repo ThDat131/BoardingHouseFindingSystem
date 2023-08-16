@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './LocationModal.css'
 import { loadAllDistrictsByProvinceCode, loadAllProvinces, loadAllWardssByDistrictCode } from '../../services/ApiServices'
+import Loading from '../Loading/Loading'
 const LocationModal = ({isOpen, onClose, addressValue}) => {  
 
 
@@ -10,30 +11,26 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
     const [selectedDistrictCode, setSelectedDistrictCode] = useState('')
     const [wards, setWards] = useState([])
     const [selectedWardCode, setSelectedWardCode] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
     useEffect (() => {
         loadAllProvinces()
-        .then(provinces => {
-            setProvinces(provinces)
-            setDistricts([])
+        .then(res => {
+            setProvinces(res.data)
+            setIsLoading(false)
         })
     }, [])
 
     useEffect(() => {
         if (selectedProvinceCode !== ''){
             loadAllDistrictsByProvinceCode(selectedProvinceCode)
-            .then(districts => {
-                setDistricts(districts)
-               
-            })
+            .then(res => setDistricts(res.data))
         }
     },[selectedProvinceCode])
 
     useEffect(() => {
         if (selectedDistrictCode !== '') {
             loadAllWardssByDistrictCode(selectedDistrictCode)
-            .then(wards => {
-                setWards(wards)
-            })
+            .then(res => setWards(res.data))
         }
     }, [selectedDistrictCode])
 
@@ -74,13 +71,8 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
         onClose()
     }
 
-
-    
     return <>
         <div className={`modal fade show ${isOpen ? 'showUp' : ''}`} tabIndex="-1" >
-            <div>
-                
-            </div>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -88,35 +80,43 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
                         <button type="button" className="btn-close" onClick={onClose}></button>
                     </div>
                     <div className="modal-body">
-                        <h5 className='mt-2'>Thành phố/Tỉnh</h5>
+                        {
+                            isLoading ? <Loading /> : 
+                            <>
+                                <h5 className='mt-2'>Thành phố/Tỉnh</h5>
+                                <select className="form-select" onChange={handleProvinceChange}>
+                                    <option value="">-- Chọn một tùy chọn --</option>
+                                    {
+                                        provinces.map((province, index) => {
+                                            return <option key={index} value={province.code}>{province.name}</option>
+                                        })
+                                    }
+
+                                </select>
+
+                                    <h5 className='mt-2'>Quận/Huyện</h5>
+                                    <select className="form-select" onChange={handleDistrictChange}>
+                                        <option value="">-- Chọn một tùy chọn --</option>
+                                        {
+                                            districts.map((district, index) => {
+                                                return <option key={index} value={district.code}>{district.name}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <h5 className='mt-2'>Phường/Xã</h5>
+                                    <select className="form-select" onChange={handleWardChange}>
+                                        <option value="">-- Chọn một tùy chọn --</option>
+                                        {
+                                            wards.map((ward, index) => {
+                                                return <option key={index} value={ward.code}>{ward.name}</option>
+                                            })
+                                        }
+                                    </select>
+                            </>
+                        }
+
                         
-                        <select className="form-select" onChange={handleProvinceChange}>
-                            <option value="">-- Chọn một tùy chọn --</option>
-                            {
-                                provinces.map(province => {
-                                    return <option value={province.code}>{province.name}</option>
-                                })
-                            }
-        
-                        </select>
-                        <h5 className='mt-2'>Quận/Huyện</h5>
-                        <select className="form-select" onChange={handleDistrictChange}>
-                            <option value="">-- Chọn một tùy chọn --</option>
-                            {
-                                districts.map(district => {
-                                    return <option value={district.code}>{district.name}</option>
-                                })
-                            }
-                        </select>
-                        <h5 className='mt-2'>Phường/Xã</h5>
-                        <select className="form-select" onChange={handleWardChange}>
-                            <option value="">-- Chọn một tùy chọn --</option>
-                            {
-                                wards.map(ward => {
-                                    return <option value={ward.code}>{ward.name}</option>
-                                })
-                            }
-                        </select>
+
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>

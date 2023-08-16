@@ -32,24 +32,24 @@ const PriceModal = ({isOpen, onClose, minPriceValue, maxPriceValue}) => {
     }
 
     return <>
-        <div class={`modal fade show ${isOpen ? 'showUp' : ''}`} tabIndex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Chọn giá</h5>
-                        <button type="button" class="btn-close" onClick={onClose}></button>
+        <div className={`modal fade show ${isOpen ? 'showUp' : ''}`} tabIndex="-1">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Chọn giá</h5>
+                        <button type="button" className="btn-close" onClick={onClose}></button>
                     </div>
-                    <div class="modal-body">
-                        <label htmlFor="priceMinRange" class="form-label">Giá thấp nhất: {minPrice}</label>
-                        <input type="range" class="form-range" id="priceMinRange" min={0} max={10000000} 
+                    <div className="modal-body">
+                        <label htmlFor="priceMinRange" className="form-label">Giá thấp nhất: {minPrice}</label>
+                        <input type="range" className="form-range" id="priceMinRange" min={0} max={10000000} 
                             onChange={handleMinPriceSelected} step={500000}/>
-                        <label htmlFor="priceMaxRange" class="form-label">Giá cao nhất: {maxPrice}</label>
-                        <input type="range" class="form-range" id="priceMaxRange" min={0} max={10000000}
+                        <label htmlFor="priceMaxRange" className="form-label">Giá cao nhất: {maxPrice}</label>
+                        <input type="range" className="form-range" id="priceMaxRange" min={0} max={10000000}
                             onChange={handleMaxPriceSelected} step={500000} />
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onClick={onClose}>Close</button>
-                        <button type="button" class="btn btn-primary" onClick={submitValue}>Save changes</button>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
+                        <button type="button" className="btn btn-primary" onClick={submitValue}>Save changes</button>
                     </div>
                 </div>
             </div>
