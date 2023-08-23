@@ -1,0 +1,37 @@
+.post {
+    /* height: 500px; */
+    overflow: hidden;
+}
+
+.img-post {
+    width: 240px;
+    height: 280px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.name-post > h3 {
+    color: red;
+    font-size: 20px;
+}
+
+.room-info .price {
+    color: #16c784;
+    font-weight: 600;
+    
+}
+
+.content-post {
+    color: #8a8d91;
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    
+}
+.avatar-owner {
+    width: 30px;
+    height: 30px;
+}

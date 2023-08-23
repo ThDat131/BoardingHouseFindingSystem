@@ -4,16 +4,12 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,12 +39,21 @@ public class Image implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "url")
     private String url;
-    @JoinColumn(name = "landLordId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @JoinColumn(name = "landLordId", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = true)
     private LandLord landLordId;
-    @JoinColumn(name = "postId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @JoinColumn(name = "postId", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = true)
     private Post postId;
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    @Transient
+    MultipartFile file;
 
     public Image() {
     }
@@ -61,6 +66,8 @@ public class Image implements Serializable {
         this.id = id;
         this.url = url;
     }
+
+    public MultipartFile getFile() {return file;}
 
     public String getId() {
         return id;

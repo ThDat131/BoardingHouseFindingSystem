@@ -6,17 +6,8 @@ package com.md.pojo;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -67,12 +58,12 @@ public class LandLord implements Serializable {
     @Column(name = "personalId")
     private String personalId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "landLordId")
-    private Collection<Image> imageCollection;
+    private Set<Image> imageSet;
     @JoinColumn(name = "username", referencedColumnName = "username")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private User username;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "landLordId")
-    private Collection<Follow> followCollection;
+    private Set<Follow> followSet;
 
     public LandLord() {
     }
@@ -81,12 +72,13 @@ public class LandLord implements Serializable {
         this.id = id;
     }
 
-    public LandLord(String id, String fullName, String address, String phone, String personalId) {
+    public LandLord(String id, String fullName, String address, String phone, String personalId, User user) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.personalId = personalId;
+        this.username = user;
     }
 
     public String getId() {
@@ -130,12 +122,12 @@ public class LandLord implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Image> getImageCollection() {
-        return imageCollection;
+    public Set<Image> getImageSet() {
+        return imageSet;
     }
 
-    public void setImageCollection(Collection<Image> imageCollection) {
-        this.imageCollection = imageCollection;
+    public void setImageSet(Set<Image> imageSet) {
+        this.imageSet = imageSet;
     }
 
     public User getUsername() {
@@ -147,12 +139,12 @@ public class LandLord implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Follow> getFollowCollection() {
-        return followCollection;
+    public Set<Follow> getFollowSet() {
+        return followSet;
     }
 
-    public void setFollowCollection(Collection<Follow> followCollection) {
-        this.followCollection = followCollection;
+    public void setFollowCollection(Set<Follow> followSet) {
+        this.followSet = followSet;
     }
 
     @Override

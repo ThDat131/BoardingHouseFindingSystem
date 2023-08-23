@@ -1,6 +1,7 @@
 package com.md.service;
 
 import com.md.pojo.Districts;
+import com.md.pojo.LandLord;
 import com.md.pojo.Provinces;
 import com.md.pojo.Wards;
 
@@ -13,5 +14,4 @@ public interface AddressService {
     List<Provinces> getProvinces();
     List<Districts> getDistrictByProvincesCode(String code);
     List<Wards> getWardsByDistrictCode(String code);
-
 }

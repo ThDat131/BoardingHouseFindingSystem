@@ -1,3 +1,10 @@
+.room {
+    max-width: 25rem;
+}
+.body {
+    min-height: 5rem;
+}
+
 .address > p{
     margin-bottom: 0;
 }

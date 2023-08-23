@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './Room.css'
-import VNDCurrencyFormat from '../../services/Utils'
 import { deleteRoom } from '../../services/ApiServices'
 import AddRoomModal from '../AddRoomModal/AddRoomModal'
 import { Link } from 'react-router-dom'
+import { VNDCurrencyFormat } from '../../services/Utils'
 
 const Room = ({ roomData, onDelete }) => {
 
@@ -44,16 +44,16 @@ const Room = ({ roomData, onDelete }) => {
                 <div className="address ">
                     <p>Địa chỉ: {roomData.provinceId.fullName}, {roomData.districtId.fullName}, {roomData.wardId.fullName}</p>
                 </div>
-                <div className="d-flex justify-content-between align-items-center mt-3 px-3">
-                    <Link to={`room/${roomData.id}`}>
-                        <button className="btn btn-info" onClick={updateAction} >
-                            Chỉnh sửa
-                        </button>
-                    </Link>
-                    <button className='btn btn-danger' onClick={deleteAction}>Xoá</button>
-                </div>
-                
             </div>
+            <div className="d-flex justify-content-between align-items-center mt-5 px-3">
+                <Link to={`room/${roomData.id}`}>
+                    <button className="btn btn-info" onClick={updateAction} >
+                        Chỉnh sửa
+                    </button>
+                </Link>
+                <button className='btn btn-danger' onClick={deleteAction}>Xoá</button>
+            </div>
+
         </div>
     </>
 }

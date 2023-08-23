@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom"
+import './Header.css'
+
 const Header = () => {
     let decor_none = {
         textDecoration: "none"
@@ -39,16 +42,18 @@ const Header = () => {
             <div className="container">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link text-light" href="#">Trang chủ</a>
+                        <Link to={`/`} className="nav-link text-light" >
+                            Trang chủ
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link text-light" href="#">Tin thuê phòng trọ</a>
+                        <Link className="nav-link text-light" to={`/tin-tim-nha-tro`}>Tin thuê phòng trọ</Link>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link text-light" href="#">Tin tìm phòng trọ</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link text-light" href="#">Quản lý phòng trọ</a>
+                        <Link className="nav-link text-light" to={`/quan-ly-nha-tro`}>Quản lý phòng trọ</Link>
                     </li>
                 </ul>
             </div>
