@@ -65,7 +65,7 @@ public class Post implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
     private Collection<Comment> commentCollection;
     @JoinColumn(name = "roomId", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -73,10 +73,10 @@ public class Post implements Serializable {
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private User username;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
     private Set<Image> imageSet;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
     private Set<PostOfTenant> postOfTenantSet;
 
     public String getName() {

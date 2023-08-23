@@ -35,7 +35,7 @@ public class LandLordUserValidator implements Validator {
         if(lu.getPhone().isBlank()) {
             errors.rejectValue("phone", "userlandlord.phone.phoneNotNull");
         }
-        if(lu.getPhone().matches("^[0-9]{10}$")) {
+        if(!lu.getPhone().matches("^[0-9]{10}$")) {
             errors.rejectValue("phone", "userlandlord.phone.phoneNotAppropriate");
         }
         if(lu.getPersonalId().isBlank()) {

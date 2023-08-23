@@ -6,13 +6,19 @@ import com.md.pojo.User;
 import com.md.repository.UserRepository;
 import com.md.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-@Service
+@Service("userDetailsService")
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -44,5 +50,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExits(String username) {
         return this.userRepository.isUserExits(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u = this.userRepository.getUserByUsername(username);
+        if (u == null)
+            throw new UsernameNotFoundException("Invalid");
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + u.getRole()));
+        return new org.springframework.security.core.userdetails.User(
+                u.getUsername(), u.getPassword(), authorities);
     }
 }

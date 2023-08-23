@@ -53,9 +53,14 @@ public class UserController {
         return "user-add-or-edit";
     }
 
-    @GetMapping("user/{username}")
+    @GetMapping("/user/{username}")
     public String update(Model model, @PathVariable(value="username") String username) {
         model.addAttribute("user", this.userService.getUserByUsername(username));
         return "user-add-or-edit";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }

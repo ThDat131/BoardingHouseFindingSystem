@@ -57,12 +57,12 @@ public class LandLord implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "personalId")
     private String personalId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "landLordId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "landLordId")
     private Set<Image> imageSet;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @OneToOne(optional = false)
     private User username;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "landLordId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "landLordId")
     private Set<Follow> followSet;
 
     public LandLord() {

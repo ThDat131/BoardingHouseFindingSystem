@@ -2,10 +2,11 @@ package com.md.service;
 
 import com.md.pojo.Districts;
 import com.md.pojo.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     List<User> getUsers();
     boolean addOrUpdateUser(User user);
     User getUserByUsername(String username);

@@ -67,7 +67,7 @@ public class Tentant implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "personalId")
     private String personalId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tenantId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "tenantId")
     private Collection<Follow> followCollection;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(optional = false)
