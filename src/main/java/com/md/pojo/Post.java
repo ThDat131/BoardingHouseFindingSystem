@@ -4,9 +4,12 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Post")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p"),
     @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id"),
@@ -62,6 +64,7 @@ public class Post implements Serializable {
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     private Collection<Comment> commentCollection;
     @JoinColumn(name = "roomId", referencedColumnName = "id")
@@ -71,9 +74,10 @@ public class Post implements Serializable {
     @ManyToOne(optional = false)
     private User username;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
-    private Collection<Image> imageCollection;
+    private Set<Image> imageSet;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
-    private Collection<PostOfTenant> postOfTenantCollection;
+    private Set<PostOfTenant> postOfTenantSet;
 
     public String getName() {
         return name;
@@ -146,21 +150,21 @@ public class Post implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Image> getImageCollection() {
-        return imageCollection;
+    public Set<Image> getImageSet() {
+        return imageSet;
     }
 
-    public void setImageCollection(Collection<Image> imageCollection) {
-        this.imageCollection = imageCollection;
+    public void setImageSet(Set<Image> imageCollection) {
+        this.imageSet = imageSet;
     }
 
     @XmlTransient
-    public Collection<PostOfTenant> getPostOfTenantCollection() {
-        return postOfTenantCollection;
+    public Set<PostOfTenant> getPostOfTenantSet() {
+        return postOfTenantSet;
     }
 
-    public void setPostOfTenantCollection(Collection<PostOfTenant> postOfTenantCollection) {
-        this.postOfTenantCollection = postOfTenantCollection;
+    public void setPostOfTenantSet(Set<PostOfTenant> postOfTenantSet) {
+        this.postOfTenantSet = postOfTenantSet;
     }
 
     @Override

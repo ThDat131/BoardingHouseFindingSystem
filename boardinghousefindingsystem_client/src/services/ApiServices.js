@@ -98,4 +98,41 @@ const getRoomById = async (id) => {
     }
 }
 
-export { loadAllProvinces, loadAllDistrictsByProvinceCode, loadAllWardssByDistrictCode, loadAllRoomByUsername, addRoom, deleteRoom, getRoomById, updateRoom }
+const addPostRentalRoom = async(data) => {
+    try {
+        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post`, data, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+            }
+        })
+        if (res.status === 200) {
+            return res
+        }
+    } catch(ex){
+        console.log(ex)
+    }
+}
+
+const getAllPost = async() => {
+    try {
+        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/posts`)
+        if (res.status === 200) {
+            return res
+        }
+    } catch (ex) {
+        console.log(ex)
+    }
+}
+
+export { 
+    loadAllProvinces, 
+    loadAllDistrictsByProvinceCode,
+    loadAllWardssByDistrictCode,
+    loadAllRoomByUsername, 
+    addRoom, 
+    deleteRoom, 
+    getRoomById, 
+    updateRoom, 
+    addPostRentalRoom,
+    getAllPost
+}

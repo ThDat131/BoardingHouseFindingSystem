@@ -26,4 +26,14 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/user-add-or-edit.jsp" />
     </definition>
+    <definition name="landlords" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý chủ trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/landlords.jsp" />
+    </definition>
+    <definition name="add-landlord" extends="baseLayout">
+        <put-attribute name="title" value="Thêm chủ trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/add-landlord.jsp" />
+    </definition>
 </tiles-definitions>

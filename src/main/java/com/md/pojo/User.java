@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "User")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
@@ -44,17 +43,20 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Size(min = 1, max = 200)
-    @Column(name = "avatar")
+    @Column(name = "usernameavatar")
     private String avatar;
     @Basic(optional = false)
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     private Date createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "isActive")
+    @JsonIgnore
     private boolean isActive;
     @Basic(optional = false)
     @NotNull
@@ -73,8 +75,8 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverId")
     private Collection<Notification> notificationCollection1;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private Collection<LandLord> landLordCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "username")
+    private LandLord landLord;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Collection<Tentant> tentantCollection;
@@ -99,6 +101,7 @@ public class User implements Serializable {
     }
 
     @Transient
+    @JsonIgnore
     private MultipartFile imgUrl;
 
     public MultipartFile getImgUrl() {
@@ -192,13 +195,20 @@ public class User implements Serializable {
         this.notificationCollection1 = notificationCollection1;
     }
 
-    @XmlTransient
-    public Collection<LandLord> getLandLordCollection() {
-        return landLordCollection;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setLandLordCollection(Collection<LandLord> landLordCollection) {
-        this.landLordCollection = landLordCollection;
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public LandLord getLandLord() {
+        return landLord;
+    }
+
+    public void setLandLord(LandLord landLord) {
+        this.landLord = landLord;
     }
 
     @XmlTransient
