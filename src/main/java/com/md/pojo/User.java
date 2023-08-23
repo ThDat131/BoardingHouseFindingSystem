@@ -41,12 +41,12 @@ public class User implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     @JsonIgnore
     private String password;
     @Size(min = 1, max = 200)
-    @Column(name = "usernameavatar")
+    @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)
     @Column(name = "createdDate")
@@ -63,25 +63,25 @@ public class User implements Serializable {
     @Column(name = "role")
     private int role;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
     private Collection<Comment> commentCollection;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
     private Collection<Post> postCollection;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "senderId")
     private Collection<Notification> notificationCollection;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "receiverId")
     private Collection<Notification> notificationCollection1;
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "username")
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "username")
     private LandLord landLord;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
     private Collection<Tentant> tentantCollection;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
     private Set<Room> roomSet;
 
     public User() {

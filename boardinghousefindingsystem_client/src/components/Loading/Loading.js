@@ -1,5 +1,4 @@
 import { useLottie } from "lottie-react";
-import animationLoading from "../../animation/animation_loading.json";
 
 
 const Loading = () => {

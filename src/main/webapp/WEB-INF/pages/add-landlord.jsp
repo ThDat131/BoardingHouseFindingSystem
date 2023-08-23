@@ -25,7 +25,7 @@
             <form:errors path="password" element="div" cssClass="alert alert-danger mt-2" />
         </div>
         <div class="form-floating my-3">
-            <input type="password" class="form-control" id="repassword" placeholder="Mật khẩu" name="password" />
+            <input type="password" class="form-control" id="repassword" placeholder="Mật khẩu" name="repassword" />
             <label for="repassword">Nhập lại mật khẩu</label>
         </div>
         <div class="form-floating my-3">

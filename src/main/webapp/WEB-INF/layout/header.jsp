@@ -50,6 +50,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Quản lý thông báo</a>
                 </li>
+                <c:choose>
+                    <c:when test="${pageContext.request.userPrincipal.name != null}">
+                        <li class="nav-item">
+                            <a class="nav-link text-success" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name} !</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="<c:url value="/logout" />">Đăng xuất</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="<c:url value="/login" />">Đăng nhập</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
 
             </ul>
         </div>
