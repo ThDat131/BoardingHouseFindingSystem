@@ -1,0 +1,112 @@
+/* XỬ lý form đăng nhập*/
+
+div.form-container {
+    width: 408px;
+    height: 586px;
+    background-color: var(--bg-input);
+    border-radius: 8px;
+    position: relative;
+    top: var(--top-height);
+    left: var(--left-width);
+    padding-top: 16px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+div.form-container > h2 {
+    text-align: center;
+    color: var(--text-color);
+}
+
+form {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 36px;
+    margin-bottom: 40px;
+}
+
+form > input {
+    background-color: white;
+    border-radius: 4px;
+    padding-left: 8px;
+    width: var(--width-item);
+    height: var(--height-item);
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+div.support-wrapper {
+    width: var(--width-item);
+    justify-content: space-between;
+}
+
+div.support-wrapper > h6 {
+    text-decoration: underline;
+    color: white;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+form button {
+    width: var(--width-item);
+    height: var(--height-item);
+    border: 1px solid #797979;
+    border-radius: 4px;
+    background-color: var(--third-color);
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 40px;
+    padding-bottom: 4px;
+}
+
+form button:hover {
+    opacity: 0.9;
+}
+
+/* Phần đăng nhập bằng facebook - gmail */
+div.line-options {
+    padding-left: 36px;
+    padding-right: 36px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.line-options > span {
+    font-size: 12px;
+    text-align: center;
+    color: white;
+}
+
+hr.line {
+    flex: 1;
+    color: white;
+}
+
+div.options-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    margin-top: 40px;
+}
+
+ul.option-list {
+    padding-right: 36px;
+}
+
+li.option-list__item {
+    text-align: center;
+    background-color: var(--bg-item-color);
+    color: var(--bg-input);
+    margin-bottom: 12px;
+    height: var(--height-item);
+    padding-top: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+li.option-list__item:hover {
+    background-color: var(--main-color);
+    color: var(--bg-item-color);
+}

@@ -1,0 +1,93 @@
+:root {
+    
+}
+
+/* Xử lý form đăng ký */
+
+div.form-container.signup {
+    height: 656px;
+    padding-top: 8px;
+}
+
+div.form-container.signup > h6.link-to__sign-in {
+    position: absolute;
+    right: 20px;
+    color: white;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.form-container.signup form > input {
+    margin-bottom: 8px;
+    padding: 4px;
+}
+
+#signup-form {
+    margin-top: 8px;
+    margin-right: 20px;
+    margin-bottom: 8px;
+}
+
+div.form-container.signup .ava-link {
+    margin-right: 12px;
+}
+
+div.form-container.signup .support-wrapper {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#avaImg {
+    width: 16px;
+    margin: 0;
+}
+
+div.form-container.signup div.role-wrapper {
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    width: var(--width-item);
+    border: 1px solid white;
+    height: var(--height-item);
+    padding-left: 4px;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+div.role-wrapper > input {
+    margin-top: 2px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+div.role-wrapper label {
+    margin-left: 4px;
+    margin-right: 20px;
+    color: var(--bg-item-color);
+}
+
+div.form-container.signup form {
+    margin-bottom: 20px;
+}
+
+div.form-container.signup div.host-info-container {
+    width: var(--width-item);
+}
+
+div.form-container.signup form button {
+    margin-top: 8px;
+}
+
+div.form-container.signup .options-wrapper {
+    margin-top: 0;
+    bottom: 16px;
+}
+
+div.form-container.signup .options-wrapper li:first-child {
+    margin-bottom: 8px;
+}
+
+div.form-container.signup .options-wrapper li:last-child {
+    margin-bottom: 0;
+}
