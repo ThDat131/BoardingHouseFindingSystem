@@ -1,19 +1,19 @@
 <%--
   Created by IntelliJ IDEA.
-  User: truon
-  Date: 21/08/2023
-  Time: 10:45 a.m.
+  User: Minh Tran
+  Date: 8/23/2023
+  Time: 11:11 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/landlord" var="action" />
+<c:url value="/tentant" var="action" />
 
 <div class="container">
-    <h1 class="text-center text-info mt-2">Thêm chủ trọ</h1>
-    <form:form modelAttribute="landlorduser" method="post" action="${action}"  enctype="multipart/form-data">
+    <h1 class="text-center text-info mt-2">Thêm người thuê trọ</h1>
+    <form:form modelAttribute="tentantuser" method="post" action="${action}"  enctype="multipart/form-data">
         <div class="form-floating my-3">
             <form:input type="text" cssClass="form-control" id="username" placeholder="Username" name="username" path="username" />
             <label for="username">Username</label>
@@ -21,7 +21,7 @@
         </div>
         <div class="form-floating my-3">
             <form:input type="password" cssClass="form-control" id="password" placeholder="Mật khẩu" name="password" path="password" />
-            <label for="username">Mật khẩu</label>
+            <label for="password">Mật khẩu</label>
             <form:errors path="password" element="div" cssClass="alert alert-danger mt-2" />
         </div>
         <div class="form-floating my-3">
@@ -53,9 +53,9 @@
             <form:errors path="fullName" element="div" cssClass="alert alert-danger mt-2" />
         </div>
         <div class="form-floating my-3">
-            <form:input type="text" cssClass="form-control" id="address" placeholder="Address" name="address" path="address" />
-            <label for="address">Địa chỉ</label>
-            <form:errors path="address" element="div" cssClass="alert alert-danger mt-2" />
+            <form:input type="email" cssClass="form-control" id="email" placeholder="Email" name="email" path="email" />
+            <label for="email">Email</label>
+            <form:errors path="email" element="div" cssClass="alert alert-danger mt-2" />
         </div>
         <div class="form-floating my-3">
             <form:input type="text" cssClass="form-control" id="phone" placeholder="Phone" name="phone" path="phone" />

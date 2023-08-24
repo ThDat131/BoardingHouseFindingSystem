@@ -25,7 +25,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbar_manage_user">
                         <li><a class="dropdown-item" href="<c:url value="/users" />">User</a></li>
-                        <li><a class="dropdown-item" href="#">Người thuê trọ</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/tentants" />">Người thuê trọ</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/landlords" />">Chủ trọ</a></li>
                         <li><a class="dropdown-item" href="#">Follow</a></li>
 
