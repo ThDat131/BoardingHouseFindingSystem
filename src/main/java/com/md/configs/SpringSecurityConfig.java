@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,8 +23,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         "com.md.controllers",
         "com.md.repository",
         "com.md.service",
-        "com.md.validator"
+        "com.md.validator",
+        "com.md.components"
 })
+@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -48,7 +51,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin().loginPage("/login")
                 .usernameParameter("username")
-                .passwordParameter("password").permitAll();
+                .passwordParameter("password");
 
         http.formLogin().defaultSuccessUrl("/", true)
                 .failureUrl("/login?error");
@@ -56,7 +59,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessUrl("/login");
 
 //
-        http.authorizeRequests().antMatchers("/**").access("hasAnyRole('ROLE_1', 'ROLE_2')");
+        http.authorizeRequests().antMatchers("/").permitAll();
 
         http.exceptionHandling()
                 .accessDeniedPage("/loginnn");

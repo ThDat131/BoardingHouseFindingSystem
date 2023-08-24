@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean authUser(String username, String password) {
+        return userRepository.authUser(username, password);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.userRepository.getUserByUsername(username);
         if (u == null)

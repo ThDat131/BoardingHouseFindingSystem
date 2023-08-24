@@ -9,4 +9,5 @@ public interface UserRepository {
     boolean addOrUpdateUser(User user);
     User getUserByUsername(String username);
     boolean isUserExits(String username);
+    boolean authUser(String username, String password);
 }
