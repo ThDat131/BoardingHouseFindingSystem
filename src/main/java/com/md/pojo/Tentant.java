@@ -80,12 +80,13 @@ public class Tentant implements Serializable {
         this.id = id;
     }
 
-    public Tentant(String id, String fullName, String phone, String email, String personalId) {
+    public Tentant(String id, String fullName, String phone, String email, String personalId, User username) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
         this.personalId = personalId;
+        this.username = username;
     }
 
     public String getId() {

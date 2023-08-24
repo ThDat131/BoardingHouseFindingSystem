@@ -41,4 +41,14 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/login.jsp" />
     </definition>
+    <definition name="tentants" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý người thuê trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/tentants.jsp" />
+    </definition>
+    <definition name="add-tentant" extends="baseLayout">
+        <put-attribute name="title" value="Thêm người thuê trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/add-tentant.jsp" />
+    </definition>
 </tiles-definitions>

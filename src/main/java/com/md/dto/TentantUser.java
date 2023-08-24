@@ -1,9 +1,9 @@
 package com.md.dto;
 
-import com.md.pojo.LandLord;
 import org.springframework.web.multipart.MultipartFile;
 
-public class LandLordUser {
+public class TentantUser {
+    // table user
     private String username;
     private String password;
     private String rePassword;
@@ -11,8 +11,9 @@ public class LandLordUser {
     private MultipartFile file;
     private boolean active;
     private int role;
+    // tentant
     private String fullName;
-    private String address;
+    private String email;
     private String phone;
     private String personalId;
 
@@ -30,14 +31,6 @@ public class LandLordUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRePassword() {
-        return rePassword;
-    }
-
-    public void setRePassword(String rePassword) {
-        this.rePassword = rePassword;
     }
 
     public String getAvatar() {
@@ -80,12 +73,12 @@ public class LandLordUser {
         this.fullName = fullName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -98,6 +91,14 @@ public class LandLordUser {
 
     public String getPersonalId() {
         return personalId;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 
     public void setPersonalId(String personalId) {

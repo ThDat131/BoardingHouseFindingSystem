@@ -1,0 +1,36 @@
+/* Xử lý bố cục thông tin host */
+
+div.city-district {
+    margin-top: 8px;
+    justify-content: space-between;
+}
+
+input {
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding-left: 4px;
+}
+
+#address {
+    width: 100%;
+}
+
+span.title-images {
+    font-size: 12px;
+    font-style: italic;
+    color: white;
+}
+
+div.images-component {
+    height: 24px;
+    margin-bottom: 20px;
+}
+
+div.images-component button {
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    margin-right: 4px;
+    font-size: 12px;
+}

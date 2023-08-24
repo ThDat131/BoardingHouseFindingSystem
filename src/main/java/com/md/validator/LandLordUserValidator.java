@@ -27,6 +27,10 @@ public class LandLordUserValidator implements Validator {
             errors.rejectValue("password", "user.password.passwordNotNull");
         if (!lu.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!_])[A-Za-z\\d@#$%^&+=!_]{8,}$"))
             errors.rejectValue("password", "user.password.passwordIsNotStrong");
+        if (lu.getRePassword().isBlank())
+            errors.rejectValue("rePassword", "user.rePassword.rePasswordNotNull");
+        if (!lu.getRePassword().matches(lu.getPassword()))
+            errors.rejectValue("rePassword", "user.rePassword.rePasswordIsNotMatch");
         if(lu.getFullName().isBlank())
             errors.rejectValue("fullName", "userlandlord.fullName.fullNameNotNull");
         if(lu.getAddress().isBlank()) {
