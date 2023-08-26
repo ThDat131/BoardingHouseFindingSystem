@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Room from "../../components/Room/Room"
-import { loadAllRoomByUsername } from "../../services/ApiServices"
+import { loadAllRoom } from "../../services/ApiServices"
 import AddRoomModal from "../../components/AddRoomModal/AddRoomModal"
 import Loading from "../../components/Loading/Loading"
 
@@ -19,7 +19,7 @@ const ManageRoom = () => {
 
     const [rooms, setRooms] = useState([])
     useEffect(() => {
-        loadAllRoomByUsername('landlord2')
+        loadAllRoom()
         .then(res => {
             setRooms(res.data)
             setIsLoading(false)

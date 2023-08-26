@@ -1,10 +1,10 @@
-import "../css/main.css";
+import "./SigninSignup.css";
 import React, { useState } from "react";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
-import Personal from "./Personal";
+import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import SignInForm from "../../components/SignInForm/SignInForm";
+import Personal from "../../components/Personal/Personal";
 
-const Base = () => {
+const SigninSignup = () => {
   const [current, setState] = useState('signin');
 
   const handleSignInClick = () => {
@@ -41,4 +41,4 @@ const Base = () => {
   );
 };
 
-export default Base;
+export default SigninSignup;

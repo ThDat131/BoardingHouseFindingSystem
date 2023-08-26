@@ -1,4 +1,4 @@
-import "../css/personal.css";
+import "./personal.css";
 import React from "react";
 
 const Personal = () => {
