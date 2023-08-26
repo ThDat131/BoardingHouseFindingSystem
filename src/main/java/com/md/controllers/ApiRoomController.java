@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -79,9 +80,9 @@ public class ApiRoomController {
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}/rooms")
-    public ResponseEntity<List<Room>> getRoomsByUsername(@PathVariable(value = "username") String username) {
-        List<Room> rooms = this.roomService.getRoomsByUsername(username);
+    @GetMapping("/rooms/")
+    public ResponseEntity<List<Room>> getRoomsByUsername(Principal user) {
+        List<Room> rooms = this.roomService.getRoomsByUsername(user.getName());
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 

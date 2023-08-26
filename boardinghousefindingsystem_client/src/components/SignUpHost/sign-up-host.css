@@ -34,3 +34,7 @@ div.images-component button {
     margin-right: 4px;
     font-size: 12px;
 }
+
+.host-info-container  label{
+    color: #fff;
+}

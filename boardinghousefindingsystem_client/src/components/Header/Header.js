@@ -1,7 +1,27 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import './Header.css'
+import { useContext, useState } from "react";
+import { MyUserContext } from "../../App";
+import { toast } from "react-toastify";
 
 const Header = () => {
+
+    const [user, dispatch] = useContext(MyUserContext);
+    const [openOption, setOpenOption] = useState(false)
+    const navigate = useNavigate();
+
+    const logout = () => {
+        dispatch({
+            "type": "logout"
+        })
+        navigate("/dang-nhap")
+        toast.success("Đã đăng xuất!")
+    }
+
+    const handleOpenOption = () => {
+        setOpenOption(!openOption)
+    }   
+
     let decor_none = {
         textDecoration: "none"
     }
@@ -20,25 +40,53 @@ const Header = () => {
                                     Yêu thích
                                 </a>
                             </li>
-                            <li className="mx-2">
-                                <a className="p-2 text-dark" style={decor_none} href="">
-                                    <i className="fa-solid fa-right-to-bracket mx-1"></i>
-                                    Đăng ký
-                                </a>
-                            </li>
-                            <li className="mx-2">
-                                <a className="p-2 text-dark" style={decor_none} href="">
-                                    <i className="fa-solid fa-user-plus mx-1"></i>
-                                    Đăng nhập
-                                </a>
-                            </li>
+                            {
+                                user === null ? 
+                                <>
+                                    <li className="mx-2">
+                                        <Link to="/dang-ky" className="p-2 text-dark" style={decor_none} href="">
+                                            <i className="fa-solid fa-user-plus mx-1"></i>
+                                            Đăng ký
+                                        </Link>
+                                    </li>
+                                    <li className="mx-2">
+                                        <Link to="/dang-nhap" className="p-2 text-dark" style={decor_none} href="">
+                                            <i className="fa-solid fa-user-plus mx-1"></i>
+                                            Đăng nhập
+                                        </Link>
+                                    </li>
+                                </> :
+                                <>
+            
+                                        <div className="current-user d-flex justify-content-center align-items-center gap-2" onClick={handleOpenOption}>
+                                        <img src={user.avatar} alt="" width={30} height={30} className="rounded-circle" />
+                                        <span className="nav-link text-succes">{user.username}!</span>
+                                            <div className={openOption ? 'current-user-option active' : 'current-user-option'}  >
+                                            <ul>
+                                                <li>Thông tin cá nhân</li>
+                                                {
+                                                        user.role === 0 ? <Link style={{textDecoration: "none", color:"#000"}} to="/quan-ly-nha-tro"><li>Quản lý nhà trọ</li></Link> : ""
+                                                }
+                                                <li onClick={logout}>Đăng xuất</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    {/* <button className="btn btn-secondary" onClick={logout}>Đăng xuất</button> */}
+                 
+                                </>
+
+                            }
+                            
                         </ul>
                     </div>
                 </div>
                 
             </div>
         </nav>
-        <nav className="navbar navbar-expand-sm bg-dark ">
+        <nav className="navbar navbar-expand-sm" style={{backgroundColor: "#000"}}>
             <div className="container">
                 <ul className="navbar-nav">
                     <li className="nav-item">

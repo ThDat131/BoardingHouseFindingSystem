@@ -61,6 +61,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User addUser(User user) {
+        Session s = this.factoryBean.getObject().getCurrentSession();
+        s.save(user);
+
+        return user;
+    }
+
+    @Override
     public boolean addOrUpdateUser(User user) {
         Session s = this.factoryBean.getObject().getCurrentSession();
         User existedUser = getUserByUsername(user.getUsername());

@@ -18,17 +18,17 @@ public class ApiAddressController {
     @Autowired
     private AddressService addressService;
 
-    @GetMapping("/provinces")
+    @GetMapping("/provinces/")
     public ResponseEntity<List<Provinces>> getProvinces(){
         List<Provinces> provinces = this.addressService.getProvinces();
         return new ResponseEntity<>(provinces, HttpStatus.OK);
     }
-    @GetMapping("/province/{code}/districts")
+    @GetMapping("/province/{code}/districts/")
     public ResponseEntity<List<Districts>> getDistrictByProvincesCode(@PathVariable(value ="code") String code){ // value tren param link
         List<Districts> districts = this.addressService.getDistrictByProvincesCode(code);
         return new ResponseEntity<>(districts, HttpStatus.OK);
     }
-    @GetMapping("/district/{code}/wards")
+    @GetMapping("/district/{code}/wards/")
     public ResponseEntity<List<Wards>> getWardsByDistrictCode(@PathVariable(value ="code") String code){ // value tren param link
         List<Wards> wards = this.addressService.getWardsByDistrictCode(code);
         return new ResponseEntity<>(wards, HttpStatus.OK);

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { useState } from "react"
-import { addPostRentalRoom, loadAllRoomByUsername } from "../../services/ApiServices"
+import { addPostRentalRoom, loadAllRoom } from "../../services/ApiServices"
 import Loading from "../../components/Loading/Loading"
 import "./AddPostRental.css"
 import ImagePreview from "../../components/ImagePreview/ImagePreview"
@@ -24,7 +24,7 @@ const AddPostRental = () => {
 
 
     useEffect(() => {
-        loadAllRoomByUsername('landlord2')
+        loadAllRoom()
             .then(res => {
                 setRooms(res.data)
                 setIsLoading(false)

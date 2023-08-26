@@ -57,6 +57,10 @@ public class LandLord implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "personalId")
     private String personalId;
+
+    @Basic(optional = false)
+    @Column(name = "email")
+    private String email;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "landLordId")
     private Set<Image> imageSet;
     @JoinColumn(name = "username", referencedColumnName = "username")
@@ -72,13 +76,31 @@ public class LandLord implements Serializable {
         this.id = id;
     }
 
-    public LandLord(String id, String fullName, String address, String phone, String personalId, User user) {
+    public LandLord(String id, String fullName, String address, String phone, String personalId, User username) {
+        this.id = id;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.personalId = personalId;
+        this.username = username;
+    }
+
+    public LandLord(String id, String fullName, String address, String phone, String email, String personalId, User user) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.personalId = personalId;
         this.username = user;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {

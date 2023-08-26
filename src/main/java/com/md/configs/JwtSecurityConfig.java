@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,8 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.ws.rs.HttpMethod;
-
 @Configuration
 @EnableWebSecurity
 @EnableTransactionManagement
@@ -24,6 +23,7 @@ import javax.ws.rs.HttpMethod;
         "com.md.controllers",
         "com.md.repository",
         "com.md.service",
+        "com.md.validator",
         "com.md.components"})
 @Order(1)
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -79,14 +79,16 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         // Disable crsf cho đường dẫn /rest/**
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
-        http.authorizeRequests().antMatchers("/api/products/").permitAll();
-        http.authorizeRequests().antMatchers("/api/categories/").permitAll();
-        http.authorizeRequests().antMatchers("/api/users/").permitAll();
+        http.authorizeRequests().antMatchers("/api/provinces/").permitAll();
+        http.authorizeRequests().antMatchers("/api/province/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/district/**").permitAll();
+        http.authorizeRequests().antMatchers("/api//landlord-user/").permitAll();
+        http.authorizeRequests().antMatchers("/api//tentant-user/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
+                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
+                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")
+                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')").and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }

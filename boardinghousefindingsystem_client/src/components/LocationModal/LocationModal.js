@@ -18,6 +18,7 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
             setProvinces(res.data)
             setIsLoading(false)
         })
+        .catch(ex => console.error(ex))
     }, [])
 
     useEffect(() => {

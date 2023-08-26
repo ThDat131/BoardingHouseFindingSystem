@@ -26,7 +26,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         "com.md.controllers",
         "com.md.repository",
         "com.md.service",
-        "com.md.validator"
+        "com.md.validator",
+        "com.md.controllers",
+        "com.md.advice"
 })
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {

@@ -1,6 +1,3 @@
-import { useLottie } from "lottie-react";
-
-
 const Loading = () => {
     // const options = {
     //     animationData:animationLoading,
@@ -16,7 +13,7 @@ const Loading = () => {
         
     // </>
     return <>
-        <div className="text-center m-3">
+        <div className="text-center">
             <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
             </div>

@@ -24,6 +24,8 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
+        if (user.getUsername().equals(userService.getUserByUsername(user.getUsername()).getUsername()))
+            errors.rejectValue("username", "user.username.usernameExisted");
         if (user.getUsername().equals(""))
             errors.rejectValue("username", "user.username.usernameNotNull");
         if (!user.getUsername().matches("^.{6,50}$"))
@@ -32,5 +34,8 @@ public class UserValidator implements Validator {
             errors.rejectValue("password", "user.password.passwordNotNull");
         if (!user.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!_])[A-Za-z\\d@#$%^&+=!_]{8,}$"))
             errors.rejectValue("password", "user.password.passwordIsNotStrong");
+        if (user.getRole() != -1 && user.getRole() != 0 && user.getRole() != 1) {
+            errors.rejectValue("role", "user.role.roleNotAppropriate");
+        }
     }
 }
