@@ -1,6 +1,7 @@
 package com.md.service;
 
 import com.md.pojo.Tentant;
+import com.md.pojo.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -8,6 +9,9 @@ import java.util.Map;
 
 public interface TentantService {
     List<Tentant> getTentants();
+    Tentant getTentantByUsername(String username);
+    boolean isUserTentant(String username);
+    boolean updateInfoTentant(User user, Tentant tentant);
 
     boolean addTentant(Tentant tentant);
 

@@ -1,5 +1,6 @@
 package com.md.service.impl;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.md.advice.ValidationException;
 import com.md.pojo.Image;
 import com.md.pojo.LandLord;
@@ -20,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -41,6 +43,21 @@ public class LandLordServiceImpl implements LandLordService {
     @Override
     public List<LandLord> getLandLords() {
         return this.landLordRepository.getLandLords();
+    }
+
+    @Override
+    public LandLord getLandLordByUsername(String username) {
+        return this.landLordRepository.getLandLordByUsername(username);
+    }
+
+    @Override
+    public boolean isUserLandLord(String username) {
+        return this.landLordRepository.isUserLandLord(username);
+    }
+
+    @Override
+    public boolean updateInfoLandLord(User user, LandLord landLord) {
+        return this.landLordRepository.updateInfoLandLord(user, landLord);
     }
 
     @Override

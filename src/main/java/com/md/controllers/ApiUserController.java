@@ -32,7 +32,7 @@ public class ApiUserController {
     @Autowired
     MessageSource messageSource;
 
-    @PostMapping("/login")
+    @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword())) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
@@ -43,7 +43,7 @@ public class ApiUserController {
 
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> details(Principal user) {
-            User u = this.userService.getUserByUsername(user.getName());
+        User u = this.userService.getUserByUsername(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
     @PostMapping(path = "/landlord-user/",

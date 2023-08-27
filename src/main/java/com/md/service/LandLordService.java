@@ -9,6 +9,10 @@ import java.util.Map;
 
 public interface LandLordService {
     List<LandLord> getLandLords();
+    LandLord getLandLordByUsername(String username);
+    boolean isUserLandLord(String username);
+    boolean updateInfoLandLord(User user, LandLord landLord);
+
 
     boolean addLandLord(LandLord landLord);
 

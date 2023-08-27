@@ -1,5 +1,7 @@
 package com.md.service.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.md.advice.ValidationException;
 import com.md.pojo.Tentant;
 import com.md.pojo.User;
@@ -15,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,10 +33,27 @@ public class TentantServiceImpl implements TentantService {
     TentantValidator tentantValidator;
     @Autowired
     UserService userService;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public List<Tentant> getTentants() {
         return this.tentantRepository.getTentants();
+    }
+
+    @Override
+    public Tentant getTentantByUsername(String username) {
+        return this.tentantRepository.getTentantByUsername(username);
+    }
+
+    @Override
+    public boolean isUserTentant(String username) {
+        return this.tentantRepository.isUserTentant(username);
+    }
+
+    @Override
+    public boolean updateInfoTentant(User user, Tentant tentant) {
+        return this.tentantRepository.updateInfoTentant(user, tentant);
     }
 
     @Override
