@@ -22,6 +22,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -56,7 +57,7 @@ public class LandLordServiceImpl implements LandLordService {
     }
 
     @Override
-    public boolean updateInfoLandLord(User user, LandLord landLord) {
+    public boolean updateInfoLandLord(Principal user, LandLord landLord) {
         return this.landLordRepository.updateInfoLandLord(user, landLord);
     }
 

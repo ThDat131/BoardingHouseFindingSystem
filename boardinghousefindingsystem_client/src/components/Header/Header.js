@@ -63,7 +63,11 @@ const Header = () => {
                                         <span className="nav-link text-succes">{user.username}!</span>
                                             <div className={openOption ? 'current-user-option active' : 'current-user-option'}  >
                                             <ul>
-                                                <li>Thông tin cá nhân</li>
+                                                <li>
+                                                    <Link style={{textDecoration: "none", color:"#000"}} to="/trang-ca-nhan">
+                                                        Thông tin cá nhân
+                                                    </Link>
+                                                </li>
                                                 {
                                                         user.role === 0 ? <Link style={{textDecoration: "none", color:"#000"}} to="/quan-ly-nha-tro"><li>Quản lý nhà trọ</li></Link> : ""
                                                 }

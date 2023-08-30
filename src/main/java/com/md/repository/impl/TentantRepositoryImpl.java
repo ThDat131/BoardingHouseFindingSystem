@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.xml.bind.PrintConversionEvent;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -49,11 +51,10 @@ public class TentantRepositoryImpl implements TentantRepository {
     @Override
     public Tentant getTentantByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Tentant Where username=:un");
+        Query q = s.createQuery("From Tentant Where username.username=:un");
         q.setParameter("un", username);
         try {
             Tentant tentant = (Tentant) q.getSingleResult();
-            s.evict(tentant);
             return tentant;
         }
         catch (NoResultException ex) {
@@ -65,14 +66,14 @@ public class TentantRepositoryImpl implements TentantRepository {
     public boolean isUserTentant(String username) {
         Session s = this.factory.getObject().getCurrentSession();
         Tentant tentant = s.find(Tentant.class, username);
-        s.evict(tentant);
+//        s.evict(tentant);
         return tentant != null;
     }
 
     @Override
-    public boolean updateInfoTentant(User user, Tentant tentant) {
+    public boolean updateInfoTentant(Principal user, Tentant tentant) {
         Session s = this.factory.getObject().getCurrentSession();
-        Tentant existedTentant = getTentantByUsername(user.getUsername());
+        Tentant existedTentant = getTentantByUsername(user.getName());
 
         try {
             if (tentant.getFullName() == null)

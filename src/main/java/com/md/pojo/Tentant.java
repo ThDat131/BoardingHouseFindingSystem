@@ -4,6 +4,8 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -68,6 +70,7 @@ public class Tentant implements Serializable {
     @Column(name = "personalId")
     private String personalId;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "tenantId")
+    @JsonIgnore
     private Collection<Follow> followCollection;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(optional = false)

@@ -3,13 +3,14 @@ package com.md.repository;
 import com.md.pojo.Tentant;
 import com.md.pojo.User;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface TentantRepository {
     // Xem danh sách người thuê trọ
     List<Tentant> getTentants();
     boolean isUserTentant(String username);
-    boolean updateInfoTentant(User user, Tentant tentant);
+    boolean updateInfoTentant(Principal user, Tentant tentant);
 
     // Thêm người thuê trọ
     boolean addTentant(Tentant tentant);

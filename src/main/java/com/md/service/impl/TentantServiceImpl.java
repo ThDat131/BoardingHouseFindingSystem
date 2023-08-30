@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class TentantServiceImpl implements TentantService {
     }
 
     @Override
-    public boolean updateInfoTentant(User user, Tentant tentant) {
+    public boolean updateInfoTentant(Principal user, Tentant tentant) {
         return this.tentantRepository.updateInfoTentant(user, tentant);
     }
 

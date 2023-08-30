@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,9 +73,9 @@ public class LandLordRepositoryImpl implements LandLordRepository {
     }
 
     @Override
-    public boolean updateInfoLandLord(User user, LandLord landLord) {
+    public boolean updateInfoLandLord(Principal user, LandLord landLord) {
         Session s = this.factory.getObject().getCurrentSession();
-        LandLord existedLandLord = getLandLordByUsername(user.getUsername());
+        LandLord existedLandLord = getLandLordByUsername(user.getName());
 
         try {
             if (landLord.getFullName() == null)
