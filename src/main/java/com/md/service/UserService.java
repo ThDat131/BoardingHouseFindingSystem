@@ -16,5 +16,4 @@ public interface UserService extends UserDetailsService {
     boolean isUserExits(String username);
     boolean authUser(String username, String password);
     User addUser(Map<String, String> params, MultipartFile avatar);
-
 }

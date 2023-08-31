@@ -4,5 +4,18 @@
     Author     : truon
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<h1>Hello World111 !</h1>
+<%@page contentType="text/html" pageEncoding="UTF-8"  language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<h1>Users Report</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+    </tr>
+    <c:forEach var="u" items="${usersFilter}">
+        <tr>
+            <td>${u.username}</td>
+            <td>${u.createDate}</td>
+        </tr>
+    </c:forEach>
+</table>
