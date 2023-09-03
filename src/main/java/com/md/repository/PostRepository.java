@@ -10,4 +10,6 @@ public interface PostRepository {
     boolean addLandLordPost(Post post);
 
     List<Post> getPosts();
+
+    Post getPostById(String id);
 }

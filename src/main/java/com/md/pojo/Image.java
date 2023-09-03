@@ -53,6 +53,7 @@ public class Image implements Serializable {
     }
 
     @Transient
+    @JsonIgnore
     MultipartFile file;
 
     public Image() {

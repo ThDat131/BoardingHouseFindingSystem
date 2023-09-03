@@ -92,7 +92,7 @@ CREATE INDEX idx_wards_unit ON wards(administrative_unit_id);
 CREATE TABLE User(
 	username VARCHAR(50) PRIMARY KEY,
     password NVARCHAR(50) NOT NULL,
-    usernameavatar VARCHAR(200),
+    avatar VARCHAR(200),
     createdDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     isActive BIT NOT NULL,
     role INT NOT NULL -- 2-SuperAdmin, 1-Admin, 0-User
@@ -105,7 +105,7 @@ CREATE TABLE Tentant(
     email VARCHAR(50) NOT NULL,
     personalId VARCHAR(12) NOT NULL,
     username VARCHAR(50) NOT NULL,
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE
 );
 
 CREATE TABLE LandLord(
@@ -115,7 +115,8 @@ CREATE TABLE LandLord(
     phone VARCHAR(10) NOT NULL,
     personalId VARCHAR(12) NOT NULL,
     username VARCHAR(50) NOT NULL,
-    FOREIGN KEY (username) REFERENCES User(username)
+    email varchar(50) NOT NULL,
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE
 );
 
 CREATE TABLE Notification(
@@ -132,8 +133,8 @@ CREATE TABLE Follow (
 	id VARCHAR(50) PRIMARY KEY,
     landLordId VARCHAR(50) NOT NULL,
     tenantId VARCHAR(50) NOT NULL,
-    FOREIGN KEY (landLordId) REFERENCES LandLord(id),
-    FOREIGN KEY (tenantId) REFERENCES Tentant(id)
+    FOREIGN KEY (landLordId) REFERENCES LandLord(id) ON DELETE CASCADE,
+    FOREIGN KEY (tenantId) REFERENCES Tentant(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Room(
@@ -150,7 +151,7 @@ CREATE TABLE Room(
     FOREIGN KEY (province_id) REFERENCES provinces(code),
     FOREIGN KEY (district_id) REFERENCES districts(code),
     FOREIGN KEY (ward_id) REFERENCES wards(code),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE
 
 );
 
@@ -161,8 +162,8 @@ CREATE TABLE Post(
     createdDate DATETIME NOT NULL,
     username VARCHAR(50) NOT NULL,
     roomId VARCHAR(50) NOT NULL,
-    FOREIGN KEY (username) REFERENCES User(username),
-    FOREIGN KEY (roomId) REFERENCES Room(id)
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE,
+    FOREIGN KEY (roomId) REFERENCES Room(id) ON DELETE CASCADE
     
 );
 
@@ -171,24 +172,23 @@ CREATE TABLE Comment (
     content TEXT NOT NULL,
     postId  VARCHAR(50) NOT NULL,
     username VARCHAR(50) NOT NULL,
-    FOREIGN KEY (postId) REFERENCES Post(id),
-    FOREIGN KEY (username) REFERENCES User(username)
+    FOREIGN KEY (postId) REFERENCES Post(id) ON DELETE CASCADE,
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE
 );
 
 CREATE TABLE PostOfTenant (
 	id VARCHAR(50) PRIMARY KEY,
     addressToRent VARCHAR(200) NOT NULL,
-    postId  VARCHAR(50) NOT NULL,
-    FOREIGN KEY (postId) REFERENCES Post(id)
+    FOREIGN KEY (id) REFERENCES Post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Image (
 	id VARCHAR(50) PRIMARY KEY,
     url VARCHAR(200) NOT NULL,
-    landLordId VARCHAR(50) NOT NULL,
-    postId VARCHAR(50) NOT NULL,
-    FOREIGN KEY (landLordId) REFERENCES LandLord(id),
-    FOREIGN KEY (postId) REFERENCES Post(id)
+    landLordId VARCHAR(50),
+    postId VARCHAR(50),
+    FOREIGN KEY (landLordId) REFERENCES LandLord(id) ON DELETE CASCADE,
+    FOREIGN KEY (postId) REFERENCES Post(id) ON DELETE CASCADE
 );
 
 
@@ -12728,4 +12728,4 @@ INSERT INTO wards (code,name,name_en,full_name,full_name_en,code_name,district_c
 	 ('32244','Rạch Gốc','Rach Goc','Thị trấn Rạch Gốc','Rach Goc Township','rach_goc','973',9),
 	 ('32245','Tân Ân','Tan An','Xã Tân Ân','Tan An Commune','tan_an','973',10),
 	 ('32248','Đất Mũi','Dat Mui','Xã Đất Mũi','Dat Mui Commune','dat_mui','973',10);
-INSERT INTO User (username, password, isActive, role)  values("superadmin", "Admin@123", 1, 2)
+INSERT INTO User (username, password, isActive, role)  values("superadmin", "$12$v7oDDNsNiT8QtQyfr0LgRue3Cvki8o79h.3291nZTRAQlAkU5Mwby", 1, 2)

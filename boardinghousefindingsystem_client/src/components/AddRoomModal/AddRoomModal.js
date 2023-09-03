@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { addRoom, loadAllDistrictsByProvinceCode, loadAllProvinces, loadAllWardssByDistrictCode } from "../../services/ApiServices"
+import { toast } from "react-toastify"
 
 const AddRoomModal = ({ isOpen, onClose, onAdd }) => {
 
@@ -12,6 +13,7 @@ const AddRoomModal = ({ isOpen, onClose, onAdd }) => {
     const [selectedStreet, setSelectedStreet] = useState('')
     const [selectedPrice, setselectedPrice] = useState('')
     const [selectedAcreage, setSelectedAcreage] = useState('')
+    const proccessNotify = useRef(null)
 
     const [room, setRoom] = useState({
         "address": "",
@@ -20,8 +22,8 @@ const AddRoomModal = ({ isOpen, onClose, onAdd }) => {
         "districtId": "",
         "wardId": "",
         "acreage": "",
-        "username": "landlord2"
     })
+    const [disable, setDisable] = useState(false)
 
     useEffect(() => {
         loadAllProvinces()
@@ -105,11 +107,64 @@ const AddRoomModal = ({ isOpen, onClose, onAdd }) => {
     }
 
     const handleSubmit = () => {
+        proccessNotify.current = toast.loading("Quá trình thêm phòng đang được xử lý...")
+        setDisable(true)
         addRoom(room)
         .then(res => {
-            onAdd(res.data)
+            if (res.status === 201) {
+                onAdd(res.data)
+                toast.update(proccessNotify.current, { 
+                    render: "Thêm phòng thành công", 
+                    type: "success", 
+                    isLoading: false, 
+                    autoClose: 5000, 
+                    closeOnClick: true 
+                })
+                setRoom({
+                    "address": "",
+                    "price": "",
+                    "provinceId": "",
+                    "districtId": "",
+                    "wardId": "",
+                    "acreage": "",
+                })
+
+                defaultValue()
+
+                onClose()
+                setDisable(false)
+            }
+            else if (res.response.status === 400) {
+                const errors = res.response.data
+                const errorsRes = []
+                for (let key in errors) {
+                    if (errors.hasOwnProperty(key))
+                        errorsRes.push(...errors[key])
+                }
+                toast.update(proccessNotify.current, { 
+                    render: "Thêm phòng thất bại", 
+                    type: "error", 
+                    isLoading: false, 
+                    autoClose: 5000, 
+                    closeOnClick: true 
+                })
+                errorsRes.forEach((error) => {
+                    toast.error(error)
+                })
+
+                // defaultValue()
+            }
+            
         })
-        onClose()
+    }
+
+    const defaultValue = () => {
+        setselectedProvinceCode("")
+        setSelectedDistrictCode("")
+        setSelectedWardCode("")
+        setSelectedStreet("")
+        setselectedPrice("")
+        setSelectedAcreage("")
     }
 
     return <>
@@ -152,22 +207,22 @@ const AddRoomModal = ({ isOpen, onClose, onAdd }) => {
                                 }
                             </select>
                             <div className="form-floating my-3">
-                                <input type="text" className="form-control" id="house-number" placeholder="Số nhà" onChange={handleStreetChange} />
+                                <input type="text" className="form-control" id="house-number" placeholder="Số nhà" onChange={handleStreetChange} value={selectedStreet} />
                                 <label htmlFor="house-number">Số nhà</label>
                             </div>
                         </div>
                         <div className="form-floating my-3">
-                            <input type="number" className="form-control" id="house-price" placeholder="Giá tiền" onChange={handlePriceChange}/>
+                            <input type="number" className="form-control" id="house-price" placeholder="Giá tiền" onChange={handlePriceChange} value={selectedPrice}/>
                             <label htmlFor="house-price">Giá tiền</label>
                         </div>
                         <div className="form-floating my-3">
-                            <input type="number" className="form-control" id="house-acreage" placeholder="Diện tích" onChange={handleAcreageChange} />
+                            <input type="number" className="form-control" id="house-acreage" placeholder="Diện tích" onChange={handleAcreageChange} value={selectedAcreage}/>
                             <label htmlFor="house-acreage">Diện tích</label>
                         </div>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={onClose}>Đóng</button>
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Thêm</button>
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit} disabled={disable}>Thêm</button>
                     </div>
                 </div>
             </div>

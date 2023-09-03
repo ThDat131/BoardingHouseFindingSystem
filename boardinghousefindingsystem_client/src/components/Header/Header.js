@@ -100,9 +100,6 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link text-light" href="#">Tin tìm phòng trọ</a>
                     </li>
-                    <li className="nav-item">
-                        <Link className="nav-link text-light" to={`/quan-ly-nha-tro`}>Quản lý phòng trọ</Link>
-                    </li>
                 </ul>
             </div>
 

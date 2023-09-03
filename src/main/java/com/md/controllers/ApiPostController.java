@@ -1,5 +1,6 @@
 package com.md.controllers;
 
+import com.md.advice.ValidationException;
 import com.md.pojo.Image;
 import com.md.pojo.Post;
 import com.md.pojo.Room;
@@ -9,16 +10,15 @@ import com.md.service.PostService;
 import com.md.service.RoomService;
 import com.md.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.security.Principal;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -32,17 +32,19 @@ public class ApiPostController {
     private RoomService roomService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private MessageSource messageSource;
     @PostMapping(path ="/post", consumes = {
             MediaType.MULTIPART_FORM_DATA_VALUE
     })
     public ResponseEntity<Post> addPostLandLord(@RequestParam("name") String name,
                                                 @RequestParam("content") String content,
-                                                @RequestParam("username") String username,
                                                 @RequestParam("roomId") String roomId,
-                                                @RequestParam("files")List<MultipartFile> images) {
+                                                @RequestParam("files")List<MultipartFile> images,
+                                                Principal u) {
 
 
-        User user = userService.getUserByUsername(username);
+        User user = userService.getUserByUsername(u.getName());
         Room room = roomService.getRoomById(roomId);
         Post post = new Post();
         post.setId(String.valueOf(UUID.randomUUID()));
@@ -51,22 +53,34 @@ public class ApiPostController {
         post.setUsername(user);
         post.setRoomId(room);
         post.setCreatedDate(new Date());
+        try {
+            if (this.postService.addLandLordPost(post)) {
+                if (images.size() > 0) {
+                    for (MultipartFile image : images) {
+                        Image i = new Image();
+                        i.setId(String.valueOf(UUID.randomUUID()));
+                        i.setUrl(image.getName());
+                        i.setPostId(post);
+                        i.setFile(image);
 
-        if (this.postService.addLandLordPost(post)) {
-            if(images.size() > 0) {
-                for (MultipartFile image : images) {
-                    Image i = new Image();
-                    i.setId(String.valueOf(UUID.randomUUID()));
-                    i.setUrl(image.getName());
-                    i.setPostId(post);
-                    i.setFile(image);
-
-                    this.imageService.addImage(i);
+                        this.imageService.addImage(i);
+                    }
                 }
+                return new ResponseEntity<>(post, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(post, HttpStatus.CREATED);
+
+        } catch (ValidationException ve) {
+            Map<String, List<String>> errors = ve.getErrors();
+            Map<String, List<String>> errorsRes = new HashMap<>();
+            errors.forEach((key, value) -> {
+                List<String> listErr = new ArrayList<>();
+                for (String errCode : value)
+                    listErr.add(messageSource.getMessage(errCode, null, Locale.getDefault()));
+                errorsRes.put(key, listErr);
+            });
+            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new Post(), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(new Post(), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/posts")
@@ -75,6 +89,13 @@ public class ApiPostController {
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
 
-
     }
+
+    @GetMapping("/post/{id}/")
+    public ResponseEntity<Post> getPostById(@PathVariable(value = "id") String id) {
+        Post post = this.postService.getPostById(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
+
 }

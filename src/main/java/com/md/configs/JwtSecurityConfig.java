@@ -82,13 +82,17 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/provinces/").permitAll();
         http.authorizeRequests().antMatchers("/api/province/**").permitAll();
         http.authorizeRequests().antMatchers("/api/district/**").permitAll();
-        http.authorizeRequests().antMatchers("/api//landlord-user/").permitAll();
-        http.authorizeRequests().antMatchers("/api//tentant-user/").permitAll();
+        http.authorizeRequests().antMatchers("/api/landlord-user/").permitAll();
+        http.authorizeRequests().antMatchers("/api/tentant-user/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
+                .antMatchers(HttpMethod.POST, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
+                .antMatchers(HttpMethod.DELETE, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
+                .antMatchers(HttpMethod.GET, "/api/rooms/").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
+          /*      .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")
-                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')").and()
+                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")*/
+                .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }

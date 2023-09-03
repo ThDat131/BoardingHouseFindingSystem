@@ -82,7 +82,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         }
         catch (HibernateException ex) {
             ex.printStackTrace();
-            return new Room();
+            return null;
         }
     }
 }

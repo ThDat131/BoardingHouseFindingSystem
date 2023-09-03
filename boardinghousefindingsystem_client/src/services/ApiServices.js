@@ -3,11 +3,13 @@ import cookie from "react-cookies"
 
 const SERVER_CONTEXT = "/BoardingHouseFindingSystem";
 const baseURL = "http://localhost:8080";
+const googleAPIKey = "AIzaSyBRGVdXzYMGtFyX7RXVoMz7RT1CjVuuoX4"
 
 const loadAllProvinces = async () => {
     try {
         const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/provinces/`)
         if (res.status === 200) {
+            console.log(res)
             return res
         } 
     }
@@ -60,22 +62,28 @@ const loadAllRoom = async () => {
 
 const addRoom = async (bodyParams) => {
     try {
-        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/room`, bodyParams)
+        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/room/`, bodyParams, {
+            headers: {
+                "Authorization": cookie.load("token")
+            }
+        })
         if (res.status === 201) {
             return res
         }
     } catch (ex) {
-        console.log(ex)
+        return ex
     }
     
 }
 
 const deleteRoom = async (id) => {
     try {
-        const res = await axios.delete(`${baseURL}${SERVER_CONTEXT}/api/room/${id}`)
-        if (res.status === 204) {
+        const res = await axios.delete(`${baseURL}${SERVER_CONTEXT}/api/room/${id}/`, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
             return res
-        }
     } catch (ex) {
         console.log(ex)
     }
@@ -83,7 +91,11 @@ const deleteRoom = async (id) => {
 
 const updateRoom = async (bodyParams) => {
     try {
-        const res = await axios.put(`${baseURL}${SERVER_CONTEXT}/api/room`, bodyParams)
+        const res = await axios.put(`${baseURL}${SERVER_CONTEXT}/api/room/`, bodyParams, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
         if (res.status === 200) {
             return res
         }
@@ -94,10 +106,13 @@ const updateRoom = async (bodyParams) => {
 
 const getRoomById = async (id) => {
     try {
-        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/room/${id}`)
-        if (res.status === 200) {
-            return res
-        }
+        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/room/${id}/`, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
+        return res
+        
     } catch(ex) {
         console.log(ex)
     }
@@ -108,13 +123,13 @@ const addPostRentalRoom = async(data) => {
         const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post`, data, {
             headers: {
                 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                'Authorization': cookie.load("token")
             }
         })
-        if (res.status === 200) {
-            return res
-        }
+        return res
+        
     } catch(ex){
-        console.log(ex)
+        return ex
     }
 }
 
@@ -181,6 +196,24 @@ const signUpTentant = async (data) => {
     }
 }
 
+const postRentalDetail = async (id) => {
+    try {
+        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/post/${id}/`)
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
+const getLatLngAddress = async(address) => {
+    try {
+        const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleAPIKey}`)
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
 export { 
     loadAllProvinces, 
     loadAllDistrictsByProvinceCode,
@@ -195,5 +228,7 @@ export {
     login,
     getCurrentUser,
     signUpLandLord,
-    signUpTentant
+    signUpTentant,
+    postRentalDetail,
+    getLatLngAddress
 }
