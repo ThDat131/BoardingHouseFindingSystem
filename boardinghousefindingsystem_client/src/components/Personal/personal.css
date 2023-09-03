@@ -13,11 +13,24 @@ div.intro-wrapper__avatar {
     border: 1 solid #000;
     align-items: center;
     justify-content: center;
+    position: relative;
+    display: flex;
+    overflow: hidden;
 }
 
 img.avaImg {
     width: 100%;
-    overflow: hidden;
+    height: auto;
+    object-fit: cover;
+}
+
+.input-set-avatar {
+    border: 1px solid #000;
+    border-radius: 4px;
+    background-color: #797979;
+    right: -20%;
+    bottom: 0;
+    width: 100%;
 }
 
 h5.intro-wrapper__name {
@@ -34,15 +47,35 @@ span.intro-wrapper__contact-phone {
 }
 
 button.btn-follow {
-    border-radius: 4px;
     border: 0.5px solid #ccc;
     background-color: var(--main-color);
     padding: 4px 12px;
     color: white;
 }
 
+.btn-change-password {
+    border: 1px solid #797979;
+    margin-top: 12px;
+}
+
+.btn-change-password:hover {
+    scale: 110%;
+}
+
+.btn-change-password:active {
+    background-color: var(--main-color);
+}
+
 button.btn-follow:hover {
     opacity: 0.9;
+}
+
+button.btn-follow:active {
+    opacity: 0.7;
+}
+
+button.btn-follow, .btn-change-password {
+    box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
 }
 
 div.activities-container {
@@ -56,12 +89,15 @@ div.activities-container {
 .activities-container__post-activity,
 .activities-container__information-detail {
     background-color: white;
-    border-radius: 8px;
-    border: 0.5px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 0 2px 12px rgba(0 0 0 / 12%);
+    border: 0.2px solid #e7e7e7;
 }
 
 .activities-container__information-detail {
-    margin-left: 28px;
+    margin: 0 12px 0 28px;
+    padding: 4px 8px 8px 0;
+    min-width: 272px;
 }
 
 .activities-container__post-activity > h6.activities-title,
@@ -94,3 +130,4 @@ div.activities-container {
 .activities-container__information-detail button.btn-saveChangeInfo:hover {
     opacity: 0.8;
 }
+

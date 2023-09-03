@@ -1,6 +1,7 @@
 package com.md.repository.impl;
 
 import com.md.pojo.Tentant;
+import com.md.pojo.User;
 import com.md.repository.TentantRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.xml.bind.PrintConversionEvent;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Repository
 @Transactional
@@ -42,5 +46,49 @@ public class TentantRepositoryImpl implements TentantRepository {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Tentant getTentantByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Tentant Where username.username=:un");
+        q.setParameter("un", username);
+        try {
+            Tentant tentant = (Tentant) q.getSingleResult();
+            return tentant;
+        }
+        catch (NoResultException ex) {
+            return new Tentant();
+        }
+    }
+
+    @Override
+    public boolean isUserTentant(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Tentant tentant = s.find(Tentant.class, username);
+//        s.evict(tentant);
+        return tentant != null;
+    }
+
+    @Override
+    public boolean updateInfoTentant(Principal user, Tentant tentant) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Tentant existedTentant = getTentantByUsername(user.getName());
+
+        try {
+            if (tentant.getFullName() == null)
+                tentant.setFullName(existedTentant.getFullName());
+            if (tentant.getPhone() == null)
+                tentant.setPhone(existedTentant.getPhone());
+            if (tentant.getEmail() == null)
+                tentant.setEmail(existedTentant.getEmail());
+
+            s.update(user);
+            s.update(tentant);
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

@@ -6,11 +6,13 @@ import com.md.pojo.User;
 import com.md.service.LandLordService;
 import com.md.service.TentantService;
 import com.md.service.UserService;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +34,7 @@ public class ApiUserController {
     @Autowired
     MessageSource messageSource;
 
-    @PostMapping("/login")
+    @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword())) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
@@ -43,7 +45,7 @@ public class ApiUserController {
 
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> details(Principal user) {
-            User u = this.userService.getUserByUsername(user.getName());
+        User u = this.userService.getUserByUsername(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
     @PostMapping(path = "/landlord-user/",
@@ -92,5 +94,20 @@ public class ApiUserController {
             return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
+    }
+
+    // Lấy ra danh sách thống kê số tài khoản cùng thời gian tạo có role theo yêu cầu
+    @GetMapping(path = "/users-filter/")
+    public ResponseEntity<List<User>> usersFilter(Model model, Integer roleChoose, Date createDateFrom) {
+        List<User> allUsers =  this.userService.getUsers();
+        List<User> usersFilter = new ArrayList<User>();
+
+        for (User u : allUsers) {
+            if (u.getRole() == roleChoose && u.getCreatedDate().compareTo(createDateFrom) >= 0) {
+                usersFilter.add(u);
+            }
+        }
+
+        return new ResponseEntity<>(usersFilter, HttpStatus.OK);
     }
 }
