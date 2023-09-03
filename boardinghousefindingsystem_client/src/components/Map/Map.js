@@ -4,28 +4,33 @@ import { useRef } from "react"
 import { useCallback } from "react"
 import { useState } from "react"
 import { memo } from "react"
+import MapGL, { Marker } from '@goongmaps/goong-map-react'
 
-const Map = ({address}) => {
+const Map = ({ lat, lng }) => {
 
-    const initPos = { lat: 10.7552929, lng: 106.3655584 }
-    const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyBRGVdXzYMGtFyX7RXVoMz7RT1CjVuuoX4"
-    }) 
+    const [viewport, setViewport] = useState({
+        latitude: lat,
+        longitude: lng,
+        zoom: 16
+    });
     
-    const mapRef = useRef()
-    const onLoad = useCallback((map) => {
-        mapRef.current = map
-    }, [])
+    return <MapGL
+        {...viewport}
+        width="100%"
+        height="400px"
+        onViewportChange={(viewport) => setViewport(viewport)
+        }
+        mapStyle="https://tiles.goong.io/assets/goong_map_dark.json"
+        goongApiAccessToken="0t9tq8g3b8q6KXA3oR4vKZdI9VIuXEioA3dhZPTC"
+    >
+        <Marker
+            latitude={lat}
+            longitude={lng}
+            >
+            <div><i className="fa-solid fa-location-dot" style={{color:"#fff"}}></i></div>
 
-    if(isLoaded)
-        return <Loading />
-    
-    return <GoogleMap mapContainerStyle={{width: '100%', height: '300px'}}
-            zoom={10}
-            center={initPos}
-            mapContainerClassName="map-container"
-            onLoad={onLoad}>
-        </GoogleMap>
+        </Marker>
+    </MapGL>
     
 }
 

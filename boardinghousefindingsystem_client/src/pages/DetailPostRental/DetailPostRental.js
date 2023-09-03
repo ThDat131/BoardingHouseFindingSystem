@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom"
 import Loading from "../../components/Loading/Loading"
 import { VNDCurrencyFormat } from "../../services/Utils"
 import DOMPurify from "dompurify"
-import { GoogleMap, Marker, useJsApiLoader, useLoadScript } from "@react-google-maps/api"
 import Map from "../../components/Map/Map"
-import GooglePlacesAutocomplete from "react-google-places-autocomplete"
 
 const DetailPostRental = () => {
 
@@ -18,10 +16,15 @@ const DetailPostRental = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const [pos, setPos] =  useState({ lat: 0, lng: 0 })
-    const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyBRGVdXzYMGtFyX7RXVoMz7RT1CjVuuoX4"
-    }) 
     const [address, setAddress] = useState("")
+    const [viewport, setViewport] = useState({
+        width: 800,
+        height: 600,
+        latitude: 37.78,
+        longitude: -122.45,
+        zoom: 14
+    });
+
 
     // const htmlFormatted = DOMPurify.sanitize(detailPost.content, {
     //     USE_PROFILES: { html: true },
@@ -45,10 +48,9 @@ const DetailPostRental = () => {
                 getLatLngAddress(currentAddress)
                 .then((res) => {
                     setPos(res.data.results[0].geometry.location)
-                    console.log(res.data.results[0])
-
+                    console.log(res.data)
+                    setIsLoading(false)
                 })
-                setIsLoading(false)
             }
         })
     }, [])
@@ -102,16 +104,7 @@ const DetailPostRental = () => {
             <div>
                 <h3>Vị trí</h3>
                 <div className="w-100 h-100" >
-                    <GoogleMap mapContainerStyle={{ width: '100%', height: '300px' }}
-                        zoom={18}
-                        center={pos}
-                        mapContainerClassName="map-container">
-                            <Marker
-                                title={address}
-                                position={pos}>
-
-                            </Marker>
-                    </GoogleMap>
+                    <Map lat={pos.lat} lng={pos.lng}/>
                 </div>
                 
             </div>

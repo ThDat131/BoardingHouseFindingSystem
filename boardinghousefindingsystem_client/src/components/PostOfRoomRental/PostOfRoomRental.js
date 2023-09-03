@@ -3,6 +3,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { VNDCurrencyFormat, decodeHtmlEntities } from "../../services/Utils";
 import { Link } from "react-router-dom";
+
 const PostOfRoomRental = ({postData}) => {
 
     const imageUrls = postData.imageSet.map(image => image.url)

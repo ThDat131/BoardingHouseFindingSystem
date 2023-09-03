@@ -3,7 +3,7 @@ import cookie from "react-cookies";
 
 const SERVER_CONTEXT = "/BoardingHouseFindingSystem";
 const baseURL = "http://localhost:8080";
-const googleAPIKey = "AIzaSyBRGVdXzYMGtFyX7RXVoMz7RT1CjVuuoX4"
+const key = "E6VybWF4vHC9mPtpXbh3u09KYcrtRyplcypeJLTV"
 
 const loadAllProvinces = async () => {
   try {
@@ -242,7 +242,7 @@ const postRentalDetail = async (id) => {
 
 const getLatLngAddress = async(address) => {
     try {
-        const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleAPIKey}`)
+      const res = await axios.get(`https://rsapi.goong.io/geocode?address=${address}&api_key=${key}`)
         return res
     } catch (err) {
         return err
@@ -265,5 +265,7 @@ export {
     signUpLandLord,
     signUpTentant,
     postRentalDetail,
-    getLatLngAddress
+    getLatLngAddress,
+    getTentantDetails,
+      changeTentantDetails,
 }
