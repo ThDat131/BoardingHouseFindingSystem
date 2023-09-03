@@ -1,13 +1,18 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import PostOfRoomRental from "../../components/PostOfRoomRental/PostOfRoomRental"
 import "./RoomRental.css"
 import AddPostRental from "../AddPostRental/AddPostRental"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getAllPost } from "../../services/ApiServices"
 import Loading from "../../components/Loading/Loading"
+import { MyUserContext } from "../../App"
+
 const RoomRental = () => {
 
     const [posts, setPosts] = useState(null)
+    const [user, dispatch] = useContext(MyUserContext);
+
+    const navigate = useNavigate();
     useEffect(() => {
         getAllPost()
         .then(res => {
@@ -22,9 +27,8 @@ const RoomRental = () => {
         return <Loading/>
     return <>
         <div className="container">
-            <Link to={'/dang-tin-cho-thue'}>
+            <Link to={user === null || user.role === -1  ? '/dang-nhap' : '/dang-tin-cho-thue' }>
                 <button className="btn btn-info my-2">Đăng tin cho thuê phòng</button>
-                
             </Link>
             <div className="row">
                 <div className="col-8">

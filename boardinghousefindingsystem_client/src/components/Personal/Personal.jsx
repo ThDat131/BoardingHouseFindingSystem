@@ -1,6 +1,6 @@
 import { React, useEffect, useRef, useState } from "react";
 import { Link, useAsyncError } from "react-router-dom";
-import "./Personal.css";
+import "./personal.css";
 import { changeTentantDetails, getCurrentUser, getTentantDetails } from "../../services/ApiServices";
 import Loading from "../Loading/Loading";
 

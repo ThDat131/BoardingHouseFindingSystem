@@ -13,6 +13,7 @@ import cookie from "react-cookies"
 import { createContext, useReducer } from "react"
 import MyUserReducer from "./reducers/MyUserReducer"
 import { ToastContainer } from "react-toastify"
+import DetailPostRental from "./pages/DetailPostRental/DetailPostRental"
 import Personal from "./components/Personal/Personal"
 
 export const MyUserContext = createContext();
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/dang-ky-dang-nhap" element={<SigninSignup />} />
           <Route path="/dang-nhap" element={<Signin />} />
           <Route path="/dang-ky" element={<Signup />} />
+          <Route path="/tin-tim-nha-tro/:id" element={<DetailPostRental />} />
           <Route path="/doi-mat-khau" element={<ChangePassForm />} />
           <Route path="/trang-ca-nhan" element={<Personal />} />
 

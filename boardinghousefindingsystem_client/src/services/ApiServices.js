@@ -3,6 +3,7 @@ import cookie from "react-cookies";
 
 const SERVER_CONTEXT = "/BoardingHouseFindingSystem";
 const baseURL = "http://localhost:8080";
+const key = "E6VybWF4vHC9mPtpXbh3u09KYcrtRyplcypeJLTV"
 
 const loadAllProvinces = async () => {
   try {
@@ -57,70 +58,75 @@ const loadAllRoom = async () => {
 };
 
 const addRoom = async (bodyParams) => {
-  try {
-    const res = await axios.post(
-      `${baseURL}${SERVER_CONTEXT}/api/room`,
-      bodyParams
-    );
-    if (res.status === 201) {
-      return res;
+    try {
+        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/room/`, bodyParams, {
+            headers: {
+                "Authorization": cookie.load("token")
+            }
+        })
+        if (res.status === 201) {
+            return res
+        }
+    } catch (ex) {
+        return ex
     }
-  } catch (ex) {
-    console.log(ex);
-  }
 };
 
 const deleteRoom = async (id) => {
-  try {
-    const res = await axios.delete(
-      `${baseURL}${SERVER_CONTEXT}/api/room/${id}`
-    );
-    if (res.status === 204) {
-      return res;
+    try {
+        const res = await axios.delete(`${baseURL}${SERVER_CONTEXT}/api/room/${id}/`, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
+            return res
+    } catch (ex) {
+        console.log(ex)
     }
-  } catch (ex) {
-    console.log(ex);
-  }
 };
 
 const updateRoom = async (bodyParams) => {
-  try {
-    const res = await axios.put(
-      `${baseURL}${SERVER_CONTEXT}/api/room`,
-      bodyParams
-    );
-    if (res.status === 200) {
-      return res;
+    try {
+        const res = await axios.put(`${baseURL}${SERVER_CONTEXT}/api/room/`, bodyParams, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
+        if (res.status === 200) {
+            return res
+        }
+    } catch (ex) {
+        console.log(ex)
     }
-  } catch (ex) {
-    console.log(ex);
-  }
 };
 
 const getRoomById = async (id) => {
-  try {
-    const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/room/${id}`);
-    if (res.status === 200) {
-      return res;
+    try {
+        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/room/${id}/`, {
+            headers: {
+                Authorization: cookie.load("token")
+            }
+        })
+        return res
+        
+    } catch(ex) {
+        console.log(ex)
     }
-  } catch (ex) {
-    console.log(ex);
-  }
 };
 
-const addPostRentalRoom = async (data) => {
-  try {
-    const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post`, data, {
-      headers: {
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-      },
-    });
-    if (res.status === 200) {
-      return res;
+const addPostRentalRoom = async(data) => {
+    try {
+        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post`, data, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                'Authorization': cookie.load("token")
+            }
+        })
+        return res
+        
+    } catch(ex){
+        return ex
     }
-  } catch (ex) {
-    console.log(ex);
-  }
 };
 
 const getAllPost = async () => {
@@ -225,21 +231,41 @@ const changeTentantDetails = async (data) => {
       }
 }
 
-export {
-  loadAllProvinces,
-  loadAllDistrictsByProvinceCode,
-  loadAllWardssByDistrictCode,
-  loadAllRoom,
-  addRoom,
-  deleteRoom,
-  getRoomById,
-  updateRoom,
-  addPostRentalRoom,
-  getAllPost,
-  login,
-  getCurrentUser,
-  getTentantDetails,
-  changeTentantDetails,
-  signUpLandLord,
-  signUpTentant,
-};
+const postRentalDetail = async (id) => {
+    try {
+        const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/post/${id}/`)
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
+const getLatLngAddress = async(address) => {
+    try {
+      const res = await axios.get(`https://rsapi.goong.io/geocode?address=${address}&api_key=${key}`)
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
+export { 
+    loadAllProvinces, 
+    loadAllDistrictsByProvinceCode,
+    loadAllWardssByDistrictCode,
+    loadAllRoom, 
+    addRoom, 
+    deleteRoom, 
+    getRoomById, 
+    updateRoom, 
+    addPostRentalRoom,
+    getAllPost,
+    login,
+    getCurrentUser,
+    signUpLandLord,
+    signUpTentant,
+    postRentalDetail,
+    getLatLngAddress,
+    getTentantDetails,
+      changeTentantDetails,
+}

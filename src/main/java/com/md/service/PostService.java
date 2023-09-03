@@ -9,5 +9,7 @@ import java.util.Map;
 public interface PostService {
     boolean addLandLordPost(Post post);
     List<Post> getPosts();
+    Post getPostById(String id);
+
 
 }

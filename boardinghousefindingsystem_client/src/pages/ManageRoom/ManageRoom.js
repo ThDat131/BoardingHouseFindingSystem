@@ -42,7 +42,7 @@ const ManageRoom = () => {
     return <>
         <AddRoomModal isOpen={isOpenAddRoomModal} onClose={closeAddRoomModal} onAdd={addRoom} />
         <div className="container">
-            <h1>Quản lý nhà trọ</h1>
+            <h1 className="text-info text-center">Quản lý nhà trọ</h1>
             <button className="btn btn-info mb-3" onClick={openAddRoomModal}>Thêm nhà trọ</button>
             <div className="row">
                 {

@@ -1,21 +1,23 @@
 package com.md.controllers;
 
+import com.md.advice.ValidationException;
 import com.md.pojo.Room;
 import com.md.pojo.User;
 import com.md.service.AddressService;
 import com.md.service.RoomService;
 import com.md.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -27,34 +29,32 @@ public class ApiRoomController {
     private AddressService addressService;
     @Autowired
     private  UserService userService;
+    @Autowired
+    private MessageSource messageSource;
 
-
-    @PostMapping(path="/room", produces = {
+    @PostMapping(path="/room/", produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<Room> addRoom(@RequestBody Map<String, String>params) {
-        String address = params.get("address");
-        Float price = Float.parseFloat(params.get("price"));
-        String provinceId = params.get("provinceId");
-        String districtId = params.get("districtId");
-        String wardId = params.get("wardId");
-        String username = params.get("username");
-        Float acreage = Float.parseFloat(params.get("acreage"));
-
-        Room room = new Room();
-        room.setId(String.valueOf(UUID.randomUUID()));
-        room.setAddress(address);
-        room.setPrice(price);
-        room.setProvinceId(addressService.getProvinceById(provinceId));
-        room.setDistrictId(addressService.getDistrictById(districtId));
-        room.setWardId(addressService.getWardById(wardId));
-        room.setUsername(userService.getUserByUsername(username));
-        room.setAcreage(acreage);
-        this.roomService.addRoom(room);
-        return new ResponseEntity<>(room, HttpStatus.CREATED);
+    public ResponseEntity addRoom(@RequestBody Map<String, String>params, Principal user) {
+        try {
+            Room room = this.roomService.addRoom(params, user);
+            if (room != null)
+                return new ResponseEntity(room, HttpStatus.CREATED);
+        } catch (ValidationException ve) {
+            Map<String, List<String>> errors = ve.getErrors();
+            Map<String, List<String>> errorsRes = new HashMap<>();
+            errors.forEach((key, value) -> {
+                List<String> listErr = new ArrayList<>();
+                for(String errCode: value)
+                    listErr.add(messageSource.getMessage(errCode, null, Locale.getDefault()));
+                errorsRes.put(key, listErr);
+            });
+            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(path="/room", produces = {
+    @PutMapping(path="/room/", produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
     public ResponseEntity<Room> updateRoom(@RequestBody Map<String, String>params) {
@@ -65,7 +65,8 @@ public class ApiRoomController {
         String districtId = params.get("districtId");
         String wardId = params.get("wardId");
         Float acreage = Float.parseFloat(params.get("acreage"));
-        String username = params.get("username");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 
         Room room = new Room();
         room.setId(id);
@@ -75,7 +76,7 @@ public class ApiRoomController {
         room.setProvinceId(addressService.getProvinceById(provinceId));
         room.setDistrictId(addressService.getDistrictById(districtId));
         room.setWardId(addressService.getWardById(wardId));
-        room.setUsername(userService.getUserByUsername(username));
+        room.setUsername(userService.getUserByUsername(auth.getName()));
         this.roomService.updateRoom(room);
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
@@ -86,13 +87,13 @@ public class ApiRoomController {
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
-    @DeleteMapping({"/room/{id}"})
+    @DeleteMapping({"/room/{id}/"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRoom(@PathVariable(value = "id") String id) {
         this.roomService.deleteRoom(id);
     }
 
-    @GetMapping("/room/{id}")
+    @GetMapping("/room/{id}/")
     public ResponseEntity<Room> getRoomById(@PathVariable(value = "id") String id) {
         Room room = this.roomService.getRoomById(id);
         return new ResponseEntity<>(room, HttpStatus.OK);

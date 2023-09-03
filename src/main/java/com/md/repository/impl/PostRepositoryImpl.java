@@ -3,6 +3,7 @@ package com.md.repository.impl;
 import com.md.pojo.Image;
 import com.md.pojo.Post;
 import com.md.repository.PostRepository;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,20 @@ public class PostRepositoryImpl implements PostRepository {
         catch (NoResultException ex) {
             ex.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public Post getPostById(String id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Post post =  session.get(Post.class, id);
+            Hibernate.initialize(post.getImageSet());
+            return post;
+        }
+        catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

@@ -4,6 +4,7 @@ import { deleteRoom } from '../../services/ApiServices'
 import AddRoomModal from '../AddRoomModal/AddRoomModal'
 import { Link } from 'react-router-dom'
 import { VNDCurrencyFormat } from '../../services/Utils'
+import { toast } from 'react-toastify'
 
 const Room = ({ roomData, onDelete }) => {
 
@@ -22,7 +23,10 @@ const Room = ({ roomData, onDelete }) => {
             const deleteItemId = roomData.id
             deleteRoom(deleteItemId)
                 .then(res => {
-                    onDelete(deleteItemId)
+                    if (res.status === 204) {
+                        onDelete(deleteItemId)
+                        toast.success("Xoá thành công!")
+                    }
                 })
         }
         

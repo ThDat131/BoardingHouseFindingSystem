@@ -12,6 +12,7 @@ import com.md.service.UserService;
 import com.md.validator.TentantValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,12 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
+@Transactional(rollbackFor = ValidationException.class)
 public class TentantServiceImpl implements TentantService {
     @Autowired
     TentantRepository tentantRepository;
@@ -66,7 +65,7 @@ public class TentantServiceImpl implements TentantService {
     public Tentant addTentant(Map<String, String> params) {
         Tentant tentant = new Tentant();
 
-        String id = params.get("id");
+        String id = String.valueOf(UUID.randomUUID());
         String fullName = params.get("fullName");
         String phone = params.get("phone");
         String personalId = params.get("personalId");

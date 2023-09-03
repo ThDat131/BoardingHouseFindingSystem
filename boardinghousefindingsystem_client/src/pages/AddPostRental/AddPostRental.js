@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { useState } from "react"
 import { addPostRentalRoom, loadAllRoom } from "../../services/ApiServices"
 import Loading from "../../components/Loading/Loading"
@@ -7,6 +7,8 @@ import ImagePreview from "../../components/ImagePreview/ImagePreview"
 import { Editor } from "@tinymce/tinymce-react"
 import { VNDCurrencyFormat } from "../../services/Utils"
 import { useNavigate } from "react-router-dom"
+import { MyUserContext } from "../../App"
+import { toast } from "react-toastify"
 
 const AddPostRental = () => {
 
@@ -15,6 +17,8 @@ const AddPostRental = () => {
     const [imageUrls, setImageUrls] = useState([])
 
     const [isLoading, setIsLoading] = useState(false)
+
+    const [user, dispatch] = useContext(MyUserContext);
 
     const filesRef = useRef([])
 
@@ -54,20 +58,48 @@ const AddPostRental = () => {
         setIsLoading(true)
         const name = evt.target.name.value
         const content = evt.target.content.value
-        const username = "landlord2"
+        const username = user.username
         const roomId = evt.target.roomId.value 
         const formData = new FormData()
         formData.append("name", name)
         formData.append("content", content)
         formData.append("username", username)
         formData.append("roomId", roomId)
+
         for(let i = 0; i < filesRef.current.length; i++) {
             formData.append("files", filesRef.current[i])
         }
-        await addPostRentalRoom(formData).then(() => {
+
+        if (!filesRef.current || filesRef.current.length < 1) {
+            toast.error("Vui lòng thêm ít nhất một ảnh cho bài đăng!")
             setIsLoading(false)
-            navigate("/tin-tim-nha-tro")
+            return;
+        }
+
+        await addPostRentalRoom(formData).then((res) => {
+            if (res.status === 201) {
+                setIsLoading(false)
+                navigate("/tin-tim-nha-tro")
+            }
+            else if (res.response.status === 400) {
+                const errors = res.response.data
+                const errorsRes = []
+                for (let key in errors) {
+                    if (errors.hasOwnProperty(key))
+                        errorsRes.push(...errors[key])
+                }
+
+                errorsRes.map(error => {
+                    return toast.error(error)
+                })
+                setIsLoading(false)
+            }
+            
         })
+    }
+
+    if (user === null || user.role === -1) {
+        navigate("/")
     }
 
     return <>
@@ -108,7 +140,7 @@ const AddPostRental = () => {
                         {
                             isLoading ? <Loading /> :
                                 rooms.map((room, index) => {
-                                    return <option key={index} value={room.id}>{room.address} - {VNDCurrencyFormat.format(room.price)} - {room.acreage} <span>m<sup>2</sup></span></option>
+                                    return <option key={index} value={room.id}>{room.address} - {VNDCurrencyFormat.format(room.price)} - {room.acreage} m<sup>2</sup></option>
                                 })
                         }
                     </select>
@@ -133,9 +165,7 @@ const AddPostRental = () => {
                             <span>Đăng</span>
                             {
                                 isLoading === true ?
-                                <div className="spinner-border" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div> 
+                                <Loading />
                                 : ""
                             }
                             
