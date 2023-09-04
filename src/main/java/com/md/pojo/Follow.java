@@ -4,6 +4,8 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,7 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "Follow")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Follow.findAll", query = "SELECT f FROM Follow f"),
     @NamedQuery(name = "Follow.findById", query = "SELECT f FROM Follow f WHERE f.id = :id")})
@@ -42,6 +42,7 @@ public class Follow implements Serializable {
     private LandLord landLordId;
     @JoinColumn(name = "tenantId", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Tentant tenantId;
 
     public Follow() {

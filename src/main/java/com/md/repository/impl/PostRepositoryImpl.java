@@ -50,9 +50,12 @@ public class PostRepositoryImpl implements PostRepository {
     public Post getPostById(String id) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
-            Post post =  session.get(Post.class, id);
+            Post post  = session.createQuery("FROM Post p left join fetch p.commentSet WHERE p.id=:id",Post.class)
+                .setParameter("id", id)
+                .getSingleResult();
+//            Post post =  session.get(Post.class, id);
             Hibernate.initialize(post.getImageSet());
-            Hibernate.initialize(post.getCommentSet());
+//            Hibernate.initialize(post.getCommentSet());
             return post;
         }
         catch (NoResultException ex) {

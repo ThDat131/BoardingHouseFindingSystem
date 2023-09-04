@@ -65,6 +65,18 @@ public class LandLordRepositoryImpl implements LandLordRepository {
     }
 
     @Override
+    public LandLord getLandLordById(String id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            LandLord l = s.get(LandLord.class, id);
+            return l;
+
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean isUserLandLord(String username) {
         Session s = this.factory.getObject().getCurrentSession();
         LandLord landLord = s.find(LandLord.class, username);

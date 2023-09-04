@@ -36,7 +36,6 @@ const RoomRental = () => {
                     <div className="posts">
                         {
                             posts.map((data, index) => {
-                                console.log(data)
                                 return <PostOfRoomRental key={index} postData={data}/>
                             })
                         }

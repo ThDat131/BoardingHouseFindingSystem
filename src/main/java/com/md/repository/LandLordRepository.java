@@ -11,8 +11,9 @@ public interface LandLordRepository {
     boolean isUserLandLord(String username);
     boolean updateInfoLandLord(Principal user, LandLord landLord);
 
-
     boolean addLandLord(LandLord landLord);
 
     LandLord getLandLordByUsername(String username);
+
+    LandLord getLandLordById(String id);
 }

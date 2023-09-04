@@ -14,6 +14,7 @@ public interface LandLordService {
     boolean isUserLandLord(String username);
     boolean updateInfoLandLord(Principal user, LandLord landLord);
 
+    LandLord getLandLordById(String id);
 
     boolean addLandLord(LandLord landLord);
 

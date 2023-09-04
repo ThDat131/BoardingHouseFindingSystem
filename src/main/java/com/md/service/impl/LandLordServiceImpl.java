@@ -62,6 +62,11 @@ public class LandLordServiceImpl implements LandLordService {
     }
 
     @Override
+    public LandLord getLandLordById(String id) {
+        return this.landLordRepository.getLandLordById(id);
+    }
+
+    @Override
     @Transactional
     public boolean addLandLord(LandLord landLord) {
         return this.landLordRepository.addLandLord(landLord);

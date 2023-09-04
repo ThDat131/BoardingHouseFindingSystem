@@ -7,12 +7,10 @@ package com.md.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -20,7 +18,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Tentant")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tentant.findAll", query = "SELECT t FROM Tentant t"),
     @NamedQuery(name = "Tentant.findById", query = "SELECT t FROM Tentant t WHERE t.id = :id"),
@@ -59,9 +56,9 @@ public class Tentant implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "personalId")
     private String personalId;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "tenantId")
-    @JsonIgnore
-    private Collection<Follow> followCollection;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "tenantId", fetch = FetchType.EAGER)
+//    @JsonIgnore
+    private Set<Follow> followSet;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @JsonIgnore
     @OneToOne(optional = false)
@@ -123,13 +120,12 @@ public class Tentant implements Serializable {
         this.personalId = personalId;
     }
 
-    @XmlTransient
-    public Collection<Follow> getFollowCollection() {
-        return followCollection;
+    public Set<Follow> getFollowSet() {
+        return followSet;
     }
 
-    public void setFollowCollection(Collection<Follow> followCollection) {
-        this.followCollection = followCollection;
+    public void setFollowSet(Set<Follow> followSet) {
+        this.followSet = followSet;
     }
 
     public User getUsername() {

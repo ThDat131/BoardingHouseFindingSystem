@@ -2,6 +2,7 @@ package com.md.repository.impl;
 
 import com.md.pojo.User;
 import com.md.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -38,6 +39,9 @@ public class UserRepositoryImpl implements UserRepository {
         q.setParameter("un", username);
         try {
             User user = (User) q.getSingleResult();
+            if (user.getTentant() != null) {
+                Hibernate.initialize(user.getTentant().getFollowSet());
+            }
             s.evict(user);
             return user;
         }
