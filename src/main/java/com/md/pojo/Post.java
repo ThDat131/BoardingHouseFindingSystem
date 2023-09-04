@@ -7,7 +7,6 @@ package com.md.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -64,9 +63,8 @@ public class Post implements Serializable {
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
-    private Collection<Comment> commentCollection;
+    private Set<Comment> commentSet;
     @JoinColumn(name = "roomId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Room roomId;
@@ -124,13 +122,12 @@ public class Post implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @XmlTransient
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
+    public Set<Comment> getCommentSet() {
+        return commentSet;
     }
 
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
     public Room getRoomId() {
@@ -154,7 +151,7 @@ public class Post implements Serializable {
         return imageSet;
     }
 
-    public void setImageSet(Set<Image> imageCollection) {
+    public void setImageSet(Set<Image> imageSet) {
         this.imageSet = imageSet;
     }
 

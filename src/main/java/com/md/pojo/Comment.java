@@ -4,6 +4,8 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,6 +46,7 @@ public class Comment implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "content")
     private String content;
+    @JsonIgnore
     @JoinColumn(name = "postId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Post postId;

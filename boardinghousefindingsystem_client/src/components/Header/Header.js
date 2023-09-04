@@ -60,7 +60,7 @@ const Header = () => {
             
                                         <div className="current-user d-flex justify-content-center align-items-center gap-2" onClick={handleOpenOption}>
                                         <img src={user.avatar} alt="" width={30} height={30} className="rounded-circle" />
-                                        <span className="nav-link text-succes">{user.username}!</span>
+                                        <span className="nav-link text-succes">{ user.role === 0 ? user.landLord.fullName : (user.role === -1 ? user.tentant.fullName : user.username)}</span>
                                             <div className={openOption ? 'current-user-option active' : 'current-user-option'}  >
                                             <ul>
                                                 <li>
@@ -68,6 +68,7 @@ const Header = () => {
                                                         Thông tin cá nhân
                                                     </Link>
                                                 </li>
+
                                                 {
                                                         user.role === 0 ? <Link style={{textDecoration: "none", color:"#000"}} to="/quan-ly-nha-tro"><li>Quản lý nhà trọ</li></Link> : ""
                                                 }

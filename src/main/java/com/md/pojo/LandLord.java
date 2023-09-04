@@ -4,6 +4,9 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
@@ -27,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LandLord.findByAddress", query = "SELECT l FROM LandLord l WHERE l.address = :address"),
     @NamedQuery(name = "LandLord.findByPhone", query = "SELECT l FROM LandLord l WHERE l.phone = :phone"),
     @NamedQuery(name = "LandLord.findByPersonalId", query = "SELECT l FROM LandLord l WHERE l.personalId = :personalId")})
+@JsonIgnoreProperties(value= {"imageSet", "followSet"})
 public class LandLord implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +67,7 @@ public class LandLord implements Serializable {
     private String email;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "landLordId")
     private Set<Image> imageSet;
+    @JsonIgnore
     @JoinColumn(name = "username", referencedColumnName = "username")
     @OneToOne(optional = false)
     private User username;

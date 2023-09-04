@@ -249,23 +249,38 @@ const getLatLngAddress = async(address) => {
     }
 }
 
+const addComment = async(data) => {
+  try {
+    const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/comment/`, data, {
+      headers: {
+        Authorization: cookie.load("token")
+      }
+    })
+    return res
+  }
+  catch(err) {
+    return err
+  }
+}
+
 export { 
-    loadAllProvinces, 
-    loadAllDistrictsByProvinceCode,
-    loadAllWardssByDistrictCode,
-    loadAllRoom, 
-    addRoom, 
-    deleteRoom, 
-    getRoomById, 
-    updateRoom, 
-    addPostRentalRoom,
-    getAllPost,
-    login,
-    getCurrentUser,
-    signUpLandLord,
-    signUpTentant,
-    postRentalDetail,
-    getLatLngAddress,
-    getTentantDetails,
-      changeTentantDetails,
+  loadAllProvinces, 
+  loadAllDistrictsByProvinceCode,
+  loadAllWardssByDistrictCode,
+  loadAllRoom, 
+  addRoom, 
+  deleteRoom, 
+  getRoomById, 
+  updateRoom, 
+  addPostRentalRoom,
+  getAllPost,
+  login,
+  getCurrentUser,
+  signUpLandLord,
+  signUpTentant,
+  postRentalDetail,
+  getLatLngAddress,
+  getTentantDetails,
+    changeTentantDetails,
+  addComment,
 }

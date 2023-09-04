@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUserByUsername(String username) {
         Session s = this.factoryBean.getObject().getCurrentSession();
-        Query q = s.createQuery("From User Where username=:un");
+        Query q = s.createQuery("From User u left join fetch u.landLord left join fetch u.tentant Where u.username=:un");
         q.setParameter("un", username);
         try {
             User user = (User) q.getSingleResult();
