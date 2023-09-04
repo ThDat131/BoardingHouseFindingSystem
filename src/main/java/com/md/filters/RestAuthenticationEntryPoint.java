@@ -10,7 +10,7 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        System.out.println("[DEBUG] - rest api entry point");
+            System.out.println("[DEBUG] - rest api entry point");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write("Unauthorized");
     }

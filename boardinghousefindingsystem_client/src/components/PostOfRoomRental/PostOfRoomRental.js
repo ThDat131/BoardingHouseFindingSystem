@@ -44,7 +44,7 @@ const PostOfRoomRental = ({postData}) => {
                                 <img className="w-100 rounded-circle" src={postData.username.avatar} alt="" width={30} height={30}/>
                             </div>
                             <div className="name-owner">
-                                <p className="m-0">{postData.username.username}</p>
+                                <p className="m-0">{postData.username.landLord.fullName}</p>
                             </div>
                         </div>
                         <div className="contact-owner d-flex flex-column gap-2">

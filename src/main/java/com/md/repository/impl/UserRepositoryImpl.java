@@ -2,6 +2,7 @@ package com.md.repository.impl;
 
 import com.md.pojo.User;
 import com.md.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -34,10 +35,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUserByUsername(String username) {
         Session s = this.factoryBean.getObject().getCurrentSession();
-        Query q = s.createQuery("From User Where username=:un");
+        Query q = s.createQuery("From User u left join fetch u.landLord left join fetch u.tentant Where u.username=:un");
         q.setParameter("un", username);
         try {
             User user = (User) q.getSingleResult();
+            if (user.getTentant() != null) {
+                Hibernate.initialize(user.getTentant().getFollowSet());
+            }
             s.evict(user);
             return user;
         }

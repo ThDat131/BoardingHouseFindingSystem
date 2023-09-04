@@ -15,6 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -56,6 +59,17 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.userDetailsService(userDetailsService)
 //                .passwordEncoder(passwordEncoder());
 //    }
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.addAllowedOrigin("*");
+    configuration.addAllowedMethod("*");
+    configuration.addAllowedHeader("*");
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -89,11 +103,14 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers(HttpMethod.DELETE, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers(HttpMethod.GET, "/api/rooms/").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
+                .antMatchers("/api/follow/**").access("hasRole('ROLE_-1')")
           /*      .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")
                 .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")*/
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler())
+                .and()
+                .cors().configurationSource(corsConfigurationSource());
     }
 }

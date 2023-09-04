@@ -8,14 +8,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -63,22 +60,20 @@ public class User implements Serializable {
     private int role;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
-    private Collection<Comment> commentCollection;
+    private Set<Comment> commentSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
-    private Collection<Post> postCollection;
+    private Set<Post> postSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "senderId")
-    private Collection<Notification> notificationCollection;
+    private Set<Notification> notificationSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "receiverId")
-    private Collection<Notification> notificationCollection1;
-    @JsonIgnore
+    private Set<Notification> notificationSet1;
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "username")
     private LandLord landLord;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
-    private Collection<Tentant> tentantCollection;
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "username")
+    private Tentant tentant;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "username")
     private Set<Room> roomSet;
@@ -108,6 +103,46 @@ public class User implements Serializable {
     }
     public void setImgUrl(MultipartFile imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Tentant getTentant() {
+        return tentant;
+    }
+
+    public void setTentant(Tentant tentant) {
+        this.tentant = tentant;
+    }
+
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
+    }
+
+    public Set<Notification> getNotificationSet() {
+        return notificationSet;
+    }
+
+    public void setNotificationSet(Set<Notification> notificationSet) {
+        this.notificationSet = notificationSet;
+    }
+
+    public Set<Notification> getNotificationSet1() {
+        return notificationSet1;
+    }
+
+    public void setNotificationSet1(Set<Notification> notificationSet1) {
+        this.notificationSet1 = notificationSet1;
     }
 
     public String getUsername() {
@@ -158,42 +193,6 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    @XmlTransient
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
-    }
-
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Post> getPostCollection() {
-        return postCollection;
-    }
-
-    public void setPostCollection(Collection<Post> postCollection) {
-        this.postCollection = postCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection1() {
-        return notificationCollection1;
-    }
-
-    public void setNotificationCollection1(Collection<Notification> notificationCollection1) {
-        this.notificationCollection1 = notificationCollection1;
-    }
-
     public boolean isActive() {
         return isActive;
     }
@@ -210,14 +209,6 @@ public class User implements Serializable {
         this.landLord = landLord;
     }
 
-    @XmlTransient
-    public Collection<Tentant> getTentantCollection() {
-        return tentantCollection;
-    }
-
-    public void setTentantCollection(Collection<Tentant> tentantCollection) {
-        this.tentantCollection = tentantCollection;
-    }
 
     @Override
     public int hashCode() {
@@ -244,7 +235,6 @@ public class User implements Serializable {
         return "com.md.pojo.User[ username=" + username + " ]";
     }
 
-    @XmlTransient
     public Set<Room> getRoomSet() {
         return roomSet;
     }

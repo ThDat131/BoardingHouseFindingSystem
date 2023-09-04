@@ -249,23 +249,66 @@ const getLatLngAddress = async(address) => {
     }
 }
 
+const addComment = async(data) => {
+  try {
+    const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/comment/`, data, {
+      headers: {
+        Authorization: cookie.load("token")
+      }
+    })
+    return res
+  }
+  catch(err) {
+    return err
+  }
+}
+const addFollow = async (landlordId) => {
+  try {
+    const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/follow/${landlordId}/`,{}, {
+      headers: {
+        Authorization: cookie.load("token")
+      }
+    })
+    return res
+  }
+  catch (err) {
+    return err
+  }
+}
+const deleteFollow = async (landlordId) => {
+  try {
+    const res = await axios.delete(`${baseURL}${SERVER_CONTEXT}/api/follow/${landlordId}/`, {
+      headers: {
+        Authorization: cookie.load("token")
+      }
+    })
+    return res
+  }
+  catch (err) {
+    return err
+  }
+}
+
 export { 
-    loadAllProvinces, 
-    loadAllDistrictsByProvinceCode,
-    loadAllWardssByDistrictCode,
-    loadAllRoom, 
-    addRoom, 
-    deleteRoom, 
-    getRoomById, 
-    updateRoom, 
-    addPostRentalRoom,
-    getAllPost,
-    login,
-    getCurrentUser,
-    signUpLandLord,
-    signUpTentant,
-    postRentalDetail,
-    getLatLngAddress,
-    getTentantDetails,
-      changeTentantDetails,
+  loadAllProvinces, 
+  loadAllDistrictsByProvinceCode,
+  loadAllWardssByDistrictCode,
+  loadAllRoom, 
+  addRoom, 
+  deleteRoom, 
+  getRoomById, 
+  updateRoom, 
+  addPostRentalRoom,
+  getAllPost,
+  login,
+  getCurrentUser,
+  signUpLandLord,
+  signUpTentant,
+  postRentalDetail,
+  getLatLngAddress,
+  getTentantDetails,
+    changeTentantDetails,
+  addComment,
+  addFollow,
+  deleteFollow,
 }

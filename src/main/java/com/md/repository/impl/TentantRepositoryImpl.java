@@ -3,6 +3,7 @@ package com.md.repository.impl;
 import com.md.pojo.Tentant;
 import com.md.pojo.User;
 import com.md.repository.TentantRepository;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,11 @@ public class TentantRepositoryImpl implements TentantRepository {
     @Override
     public Tentant getTentantByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Tentant Where username.username=:un");
+        Query q = s.createQuery("From Tentant t  Where t.username.username=:un");
         q.setParameter("un", username);
         try {
             Tentant tentant = (Tentant) q.getSingleResult();
+            Hibernate.initialize(tentant.getFollowSet());
             return tentant;
         }
         catch (NoResultException ex) {

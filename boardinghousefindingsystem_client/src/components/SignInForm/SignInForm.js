@@ -23,11 +23,11 @@ const SignInForm = () => {
     login(username, password)
     .then((res) => {
       cookie.save("token", res.data)
-      console.log(res.data)
       getCurrentUser()
       .then((res) => {
         let user = res.data
         cookie.save("user", user);
+        console.log(res.data)
         toast.success("Đăng nhập thành công")
         dispatch({
           "type": "login",
