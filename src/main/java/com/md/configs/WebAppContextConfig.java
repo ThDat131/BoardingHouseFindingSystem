@@ -20,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.text.SimpleDateFormat;
+
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -76,4 +78,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         m.setBasename("messages");
         return m;
     }
+
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
+
 }

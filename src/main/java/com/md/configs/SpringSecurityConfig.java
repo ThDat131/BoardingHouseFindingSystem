@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.text.SimpleDateFormat;
+
 @Configuration
 @EnableWebSecurity
 @EnableTransactionManagement
@@ -80,5 +82,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 "api_secret", this.env.getProperty("cloudinary.api_secret"),
                 "secure", true));
         return cloudinary;
+    }
+    @Bean
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
     }
 }
