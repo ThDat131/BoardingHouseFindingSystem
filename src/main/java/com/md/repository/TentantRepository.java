@@ -22,6 +22,8 @@ public interface TentantRepository {
     // Lấy người thuê trọ thông qua username
     Tentant getTentantByUsername(String username);
 
+    boolean updateTentant(Tentant tentant);
+
     // Lấy tổng số người thuê trọ theo mốc thời gian
 
 }

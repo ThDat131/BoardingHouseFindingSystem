@@ -64,10 +64,11 @@ const DetailPostRental = () => {
     }, [])
 
     useEffect(() => {
-        if (user.role === -1) {
-            setListFollow(user.tentant.followSet)
+        if (user !== null) {
+            if (user.role === -1) {
+                setListFollow(user.tentant.followSet)
+            }
         }
-        console.log(user)
     }, [user])
 
     useEffect(() => {
@@ -204,7 +205,7 @@ const DetailPostRental = () => {
                 <p className="m-0">{detailPost.username.landLord.fullName}</p>
                 {/* <button type="button" className="btn btn-info" onClick={handleFollow}>Theo dõi</button> */}
                 {
-                    user.role === -1 ?
+                    user !== null && user.role === -1 ?
                     (isFollow
                         ?
                         <>

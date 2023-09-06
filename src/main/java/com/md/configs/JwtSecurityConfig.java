@@ -104,6 +104,7 @@ public CorsConfigurationSource corsConfigurationSource() {
                 .antMatchers(HttpMethod.DELETE, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers(HttpMethod.GET, "/api/rooms/").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers("/api/follow/**").access("hasRole('ROLE_-1')")
+//                .antMatchers("/api/activate/**").access("hasAnyRole('ROLE_1', 'ROLE_2')")
           /*      .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")
                 .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")*/

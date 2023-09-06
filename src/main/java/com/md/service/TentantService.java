@@ -13,7 +13,7 @@ public interface TentantService {
     Tentant getTentantByUsername(String username);
     boolean isUserTentant(String username);
     boolean updateInfoTentant(Principal user, Tentant tentant);
-
+    boolean updateTentant(Tentant tentant);
     boolean addTentant(Tentant tentant);
 
     Tentant addTentant(Map<String, String> params);

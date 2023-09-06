@@ -124,6 +124,11 @@ public class LandLordServiceImpl implements LandLordService {
     }
 
     @Override
+    public boolean updateLandLord(LandLord landLord) {
+        return this.landLordRepository.updateLandLord(landLord);
+    }
+
+    @Override
     public boolean addLandLordUser(Map<String, String> params, MultipartFile avatar, List<MultipartFile> files) {
         try {
             this.userService.addUser(params, avatar);
@@ -134,6 +139,10 @@ public class LandLordServiceImpl implements LandLordService {
         }
     }
 
+    @Override
+    public List<LandLord> getLandLordsInactive() {
+        return this.landLordRepository.getLandLordsInactive();
+    }
 
 
 }

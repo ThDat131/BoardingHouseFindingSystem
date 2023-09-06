@@ -67,9 +67,29 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User addUser(User user) {
         Session s = this.factoryBean.getObject().getCurrentSession();
-        s.save(user);
+        try {
+            s.save(user);
+            return user;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
-        return user;
+    @Override
+    public boolean activateUser(String username) {
+        Session session = this.factoryBean.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("UPDATE User SET isActive = true WHERE username=:username");
+            query.setParameter("username", username);
+            query.executeUpdate();
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
     }
 
     @Override

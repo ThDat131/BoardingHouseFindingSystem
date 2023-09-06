@@ -1,4 +1,3 @@
-import { GoogleMap, useJsApiLoader, useLoadScript } from "@react-google-maps/api"
 import Loading from "../Loading/Loading"
 import { useRef } from "react"
 import { useCallback } from "react"

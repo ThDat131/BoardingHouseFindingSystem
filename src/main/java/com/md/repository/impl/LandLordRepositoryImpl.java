@@ -52,15 +52,27 @@ public class LandLordRepositoryImpl implements LandLordRepository {
     @Override
     public LandLord getLandLordByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From LandLord Where username=:un");
+        Query q = s.createQuery("From LandLord Where username.username=:un");
         q.setParameter("un", username);
         try {
             LandLord landLord = (LandLord) q.getSingleResult();
-            s.evict(landLord);
+//            s.evict(landLord);
             return landLord;
         }
         catch (NoResultException ex) {
             return new LandLord();
+        }
+    }
+
+    @Override
+    public boolean updateLandLord(LandLord landLord) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            session.update(landLord);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
         }
     }
 
@@ -72,6 +84,17 @@ public class LandLordRepositoryImpl implements LandLordRepository {
             return l;
 
         } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<LandLord> getLandLordsInactive() {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT distinct f FROM LandLord f left join fetch f.imageSet where f.username.isActive = false");
+            return query.getResultList();
+        } catch (HibernateException ex) {
             return null;
         }
     }

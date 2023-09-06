@@ -3,7 +3,6 @@ package com.md.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.md.advice.ValidationException;
-import com.md.pojo.LandLord;
 import com.md.pojo.User;
 import com.md.repository.UserRepository;
 import com.md.service.UserService;
@@ -20,11 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
@@ -59,6 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 ex.printStackTrace();
             }
         }
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         return this.userRepository.addOrUpdateUser(user);
     }
     @Override
@@ -117,6 +114,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(this.passwordEncoder.encode(password));
         this.userRepository.addUser(user);
         return user;
+    }
+
+    @Override
+    public boolean activateUser(String username) {
+        return this.userRepository.activateUser(username);
     }
 
     @Override
