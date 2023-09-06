@@ -57,6 +57,11 @@ public class TentantServiceImpl implements TentantService {
     }
 
     @Override
+    public boolean updateTentant(Tentant tentant) {
+        return this.tentantRepository.updateTentant(tentant);
+    }
+
+    @Override
     public boolean addTentant(Tentant tentant) {
         return this.tentantRepository.addTentant(tentant);
     }

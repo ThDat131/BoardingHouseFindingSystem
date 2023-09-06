@@ -25,6 +25,12 @@ const SignInForm = () => {
       cookie.save("token", res.data)
       getCurrentUser()
       .then((res) => {
+        if (res.data.active === false) {
+          console.log(res)
+          setIsLoading(false)
+          toast.error("Tài khoản chưa được kích hoạt")
+          return
+        }
         let user = res.data
         cookie.save("user", user);
         console.log(res.data)

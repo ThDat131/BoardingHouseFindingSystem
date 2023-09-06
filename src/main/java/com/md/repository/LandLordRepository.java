@@ -10,10 +10,9 @@ public interface LandLordRepository {
     List<LandLord> getLandLords();
     boolean isUserLandLord(String username);
     boolean updateInfoLandLord(Principal user, LandLord landLord);
-
     boolean addLandLord(LandLord landLord);
-
     LandLord getLandLordByUsername(String username);
-
+    boolean updateLandLord(LandLord landLord);
     LandLord getLandLordById(String id);
+    List<LandLord> getLandLordsInactive();
 }

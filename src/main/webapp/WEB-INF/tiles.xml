@@ -51,6 +51,20 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/add-tentant.jsp" />
     </definition>
+    <definition name="update-tentant" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật người thuê trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/update-tentant.jsp" />
+    </definition>
+    <definition name="update-landlord" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật chủ trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/update-landlord.jsp" />
+    </definition>
+    <definition name="activate-landlord" extends="baseLayout">
+        <put-attribute name="title" value="Kích hoạt chủ trọ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/activate-landlord.jsp" />
     <definition name="posts" extends="baseLayout">
         <put-attribute name="title" value="Quản lý bài viết" />
         <put-attribute name="content"

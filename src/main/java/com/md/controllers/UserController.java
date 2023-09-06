@@ -2,6 +2,7 @@ package com.md.controllers;
 
 import com.md.pojo.User;
 import com.md.service.UserService;
+import com.md.validator.UserUpdateValidator;
 import com.md.validator.UserValidator;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserValidator userValidator;
+    @Autowired
+    private UserUpdateValidator userUpdateValidator;
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(userValidator);
@@ -44,7 +47,10 @@ public class UserController {
 
     @PostMapping("/user")
     public String add(Model model, @ModelAttribute(value="user") User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+        if (userService.getUserByUsername(user.getUsername()) != null)
+            userUpdateValidator.validate(user, bindingResult);
+        else
+            userValidator.validate(user, bindingResult);
         if (!bindingResult.hasErrors()) {
             if (this.userService.addOrUpdateUser(user))
                 return "redirect:/users";

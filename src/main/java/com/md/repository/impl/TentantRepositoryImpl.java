@@ -65,6 +65,19 @@ public class TentantRepositoryImpl implements TentantRepository {
     }
 
     @Override
+    public boolean updateTentant(Tentant tentant) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            session.update(tentant);
+            return true;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean isUserTentant(String username) {
         Session s = this.factory.getObject().getCurrentSession();
         Tentant tentant = s.find(Tentant.class, username);

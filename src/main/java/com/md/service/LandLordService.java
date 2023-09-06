@@ -13,12 +13,10 @@ public interface LandLordService {
     LandLord getLandLordByUsername(String username);
     boolean isUserLandLord(String username);
     boolean updateInfoLandLord(Principal user, LandLord landLord);
-
     LandLord getLandLordById(String id);
-
     boolean addLandLord(LandLord landLord);
-
     LandLord addLandLord(Map<String, String> params, List<MultipartFile> files);
-
+    boolean updateLandLord(LandLord landLord);
     boolean addLandLordUser(Map<String, String> params, MultipartFile avatar, List<MultipartFile> files);
+    List<LandLord> getLandLordsInactive();
 }

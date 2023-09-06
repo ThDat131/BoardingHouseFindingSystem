@@ -16,6 +16,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col">Username</th>
             <th scope="col">Tên đầy đủ</th>
             <th scope="col">Email</th>
             <th scope="col">Số điện thoại</th>
@@ -26,15 +27,15 @@
         <tbody>
         <c:forEach items="${tentants}" var="t">
             <tr>
+                <td>${t.username.username}</td>
                 <td>${t.fullName}</td>
                 <td>${t.email}</td>
                 <td>${t.phone}</td>
                 <td>${t.personalId}</td>
                 <td>
                     <div class="d-flex justify-content-center align-items-center">
-                        <c:url value="/landlord/${t.username.username}" var="api"> </c:url>
+                        <c:url value="/tentant/${t.username.username}" var="api"> </c:url>
                         <a href="${api}" class="btn btn-info me-3">Cập nhật</a>
-                        <button class="btn btn-danger">Xoá</button>
                     </div>
                 </td>
             </tr>

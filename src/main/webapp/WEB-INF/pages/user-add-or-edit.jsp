@@ -11,9 +11,8 @@
 <div class="container">
   <c:url value="/user" var="action" />
   <form:form modelAttribute="user" method="post" action="${action}"  enctype="multipart/form-data" >
-
     <div class="form-floating my-3">
-      <form:input type="text" cssClass="form-control" id="username" placeholder="Username" name="username"  path="username"/>
+      <form:input type="text" cssClass="form-control" id="username" placeholder="Username" name="username"  path="username" readonly="true"/>
       <label for="username">Username</label>
       <form:errors path="username" element="div" cssClass="alert alert-danger mt-2" />
     </div>

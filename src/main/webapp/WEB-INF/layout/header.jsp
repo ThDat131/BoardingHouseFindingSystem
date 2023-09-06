@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Trang chủ</a>
+                    <a class="nav-link" href="<c:url value="/" />">Trang chủ</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbar_manage_user" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,7 +27,7 @@
                         <li><a class="dropdown-item" href="<c:url value="/users" />">User</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/tentants" />">Người thuê trọ</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/landlords" />">Chủ trọ</a></li>
-                        <li><a class="dropdown-item" href="#">Follow</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/landlords-inactivate" />">Kích hoạt chủ trọ</a></li>
 
                     </ul>
                 </li>

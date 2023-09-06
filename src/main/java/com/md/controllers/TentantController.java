@@ -8,15 +8,13 @@ import com.md.pojo.User;
 import com.md.service.TentantService;
 import com.md.service.UserService;
 import com.md.validator.TentantUserValidator;
+import com.md.validator.TentantValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -32,6 +30,8 @@ public class TentantController {
     private UserService userService;
     @Autowired
     private TentantUserValidator tentantUserValidator;
+    @Autowired
+    private TentantValidator tentantValidator;
 
     // Hiển thị danh sách tentant
     @RequestMapping("/tentants")
@@ -79,5 +79,25 @@ public class TentantController {
         List<FieldError> errors = bindingResult.getFieldErrors();
         model.addAttribute("errors", errors);
         return "add-tentant";
+    }
+
+    @RequestMapping("/tentant/{username}")
+    public String updateTentant(Model model,
+                                @PathVariable(value="username") String username) {
+        model.addAttribute("tentant", this.tentantService.getTentantByUsername(username));
+        return "update-tentant";
+    }
+
+    @PostMapping("/tentant-update")
+    public String updateTentant(Model model, @ModelAttribute(value="tentant") Tentant tentant, BindingResult bindingResult) {
+        this.tentantValidator.validate(tentant, bindingResult);
+        if (!bindingResult.hasErrors()) {
+            if (this.tentantService.updateTentant(tentant)) {
+                return "redirect:/tentants";
+            }
+        }
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        model.addAttribute("errors", errors);
+        return "update-tentant";
     }
 }

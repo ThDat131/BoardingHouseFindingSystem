@@ -2,6 +2,8 @@ package com.md.validator;
 
 import com.md.dto.LandLordUser;
 import com.md.dto.TentantUser;
+import com.md.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,6 +12,10 @@ import org.springframework.validation.Validator;
 @Component
 @PropertySource("classpath:messages.properties")
 public class TentantUserValidator implements Validator {
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public boolean supports(Class<?> clazz) {
         return TentantUser.class.isAssignableFrom(clazz);
@@ -19,6 +25,9 @@ public class TentantUserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         TentantUser tu = (TentantUser) target;
 
+        if (tu.getUsername().equals(userService.getUserByUsername(tu.getUsername()).getUsername())) {
+            errors.rejectValue("username", "user.username.usernameExisted");
+        }
         if (tu.getUsername().isBlank())
             errors.rejectValue("username", "user.username.usernameNotNull");
         if (!tu.getUsername().matches("^.{6,50}$"))
