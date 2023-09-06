@@ -20,9 +20,9 @@ import java.util.Map;
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
-    private PostRepository postRepository;
+    PostRepository postRepository;
     @Autowired
-    private PostValidator postValidator;
+    PostValidator postValidator;
     @Override
     public boolean addLandLordPost(Post post) {
         BindingResult rs = new BeanPropertyBindingResult(post, "post") {

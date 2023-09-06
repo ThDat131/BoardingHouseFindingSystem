@@ -65,5 +65,9 @@
         <put-attribute name="title" value="Kích hoạt chủ trọ" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/activate-landlord.jsp" />
+    <definition name="posts" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý bài viết" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/posts.jsp" />
     </definition>
 </tiles-definitions>

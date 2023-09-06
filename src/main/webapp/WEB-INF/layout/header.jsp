@@ -36,7 +36,7 @@
                         Quản lý bài viết
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbar_manage">
-                        <li><a class="dropdown-item" href="#">Bài viết</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/posts" />">Bài viết</a></li>
                         <li><a class="dropdown-item" href="#">Bình luận</a></li>
                         <li><a class="dropdown-item" href="#">Follow</a></li>
                     </ul>
