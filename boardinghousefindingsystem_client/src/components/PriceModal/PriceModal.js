@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './PriceModal.css'
-const PriceModal = ({isOpen, onClose, minPriceValue, maxPriceValue}) => {
+const PriceModal = ({isOpen, onClose, priceValue}) => {
 
     const [minPrice, setMinPrice] = useState(0)
     const [maxPrice, setMaxPrice] = useState(0)
@@ -26,8 +26,10 @@ const PriceModal = ({isOpen, onClose, minPriceValue, maxPriceValue}) => {
             inputMaxPrice.value=0
             return;
         }
-        minPriceValue(minPrice)
-        maxPriceValue(maxPrice)
+        priceValue({
+            "fromPrice": minPrice,
+            "toPrice": maxPrice
+        })
         onClose()
     }
 

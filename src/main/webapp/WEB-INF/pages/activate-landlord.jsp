@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1 class="text-center text-info">Danh sách các chủ trọ chưa kích hoạt</h1>
+<h1 class="text-center text-info">Danh sách user chủ trọ chưa kích hoạt</h1>
 <div class="container">
     <table class="table">
         <thead>

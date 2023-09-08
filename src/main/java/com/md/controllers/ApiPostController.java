@@ -1,14 +1,8 @@
 package com.md.controllers;
 
 import com.md.advice.ValidationException;
-import com.md.pojo.Image;
-import com.md.pojo.Post;
-import com.md.pojo.Room;
-import com.md.pojo.User;
-import com.md.service.ImageService;
-import com.md.service.PostService;
-import com.md.service.RoomService;
-import com.md.service.UserService;
+import com.md.pojo.*;
+import com.md.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -83,12 +77,10 @@ public class ApiPostController {
         return new ResponseEntity<>(new Post(), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/posts")
-    public ResponseEntity<List<Post>> getPostsLandLordByUsername() {
-        List<Post> posts = this.postService.getPosts();
-
+    @GetMapping("/posts/")
+    public ResponseEntity<List<Post>> getPostsLandLord(@RequestParam Map<String, String> params) {
+        List<Post> posts = this.postService.getPosts(params);
         return new ResponseEntity<>(posts, HttpStatus.OK);
-
     }
 
     @GetMapping("/post/{id}/")
@@ -96,6 +88,26 @@ public class ApiPostController {
         Post post = this.postService.getPostById(id);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
-
-
+    @GetMapping("/posts-tentant/")
+    public ResponseEntity<List<Post>> getPostsTentant() {
+        List<Post> posts = this.postService.getPostOfTentant();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+    @PostMapping("/post-tentant/")
+    public ResponseEntity<Post> addPostTentant(@RequestBody Map<String, String> params, Principal user) {
+        try {
+            Post p = postService.addTentantPost(params, user);
+            return new ResponseEntity<>(p, HttpStatus.CREATED);
+        } catch (ValidationException ve) {
+            Map<String, List<String>> errors = ve.getErrors();
+            Map<String, List<String>> errorsRes = new HashMap<>();
+            errors.forEach((key, value) -> {
+                List<String> listErr = new ArrayList<>();
+                for (String errCode : value)
+                    listErr.add(messageSource.getMessage(errCode, null, Locale.getDefault()));
+                errorsRes.put(key, listErr);
+            });
+            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

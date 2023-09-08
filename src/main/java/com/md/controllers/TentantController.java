@@ -100,4 +100,12 @@ public class TentantController {
         model.addAttribute("errors", errors);
         return "update-tentant";
     }
+
+    @GetMapping("/tentants-inactivate")
+    public String activateTentantPage(Model model) {
+        List<Tentant> tentants = this.tentantService.getTentantsInactive();
+        model.addAttribute("tentants", tentants);
+        return "activate-tentant";
+
+    }
 }

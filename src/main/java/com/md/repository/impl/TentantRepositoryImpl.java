@@ -81,6 +81,18 @@ public class TentantRepositoryImpl implements TentantRepository {
     }
 
     @Override
+    public List<Tentant> getTentantsInactive() {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("FROM Tentant t WHERE t.username.isActive = false");
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public boolean isUserTentant(String username) {
         Session s = this.factory.getObject().getCurrentSession();
         Tentant tentant = s.find(Tentant.class, username);

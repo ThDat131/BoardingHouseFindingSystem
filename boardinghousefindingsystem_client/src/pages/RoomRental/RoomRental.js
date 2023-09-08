@@ -27,7 +27,7 @@ const RoomRental = () => {
         return <Loading/>
     return <>
         <div className="container">
-            {user === null || user.role !== 0 ? "" : <button className="btn btn-info my-2">Đăng tin cho thuê phòng</button> }
+            {user === null || user.role !== 0 ? "" : <Link to='/dang-tin-cho-thue' ><button className="btn btn-info my-2">Đăng tin cho thuê phòng</button></Link> }
                 
             <div className="row">
                 <div className="col-8">

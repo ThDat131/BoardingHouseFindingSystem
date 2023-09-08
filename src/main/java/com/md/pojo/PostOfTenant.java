@@ -4,19 +4,12 @@
  */
 package com.md.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,11 +17,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "PostOfTenant")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PostOfTenant.findAll", query = "SELECT p FROM PostOfTenant p"),
-    @NamedQuery(name = "PostOfTenant.findById", query = "SELECT p FROM PostOfTenant p WHERE p.id = :id"),
-    @NamedQuery(name = "PostOfTenant.findByAddressToRent", query = "SELECT p FROM PostOfTenant p WHERE p.addressToRent = :addressToRent")})
+    @NamedQuery(name = "PostOfTenant.findAll", query = "SELECT p FROM PostOfTenant p")})
 public class PostOfTenant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,9 +33,19 @@ public class PostOfTenant implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "addressToRent")
     private String addressToRent;
-    @JoinColumn(name = "postId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Post postId;
+    @OneToOne
+    @JsonIgnore
+    @MapsId
+    @JoinColumn(name = "id")
+    private Post post;
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 
     public PostOfTenant() {
     }
@@ -73,14 +73,6 @@ public class PostOfTenant implements Serializable {
 
     public void setAddressToRent(String addressToRent) {
         this.addressToRent = addressToRent;
-    }
-
-    public Post getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Post postId) {
-        this.postId = postId;
     }
 
     @Override

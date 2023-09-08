@@ -1,11 +1,8 @@
 package com.md.repository;
 
-import com.md.dto.StatInfo;
 import com.md.pojo.Tentant;
-import com.md.pojo.User;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
 public interface TentantRepository {
@@ -27,5 +24,6 @@ public interface TentantRepository {
     boolean updateTentant(Tentant tentant);
 
     // Lấy tổng số người thuê trọ theo mốc thời gian
-
+    List<Tentant> getTentantsInactive();
 }
+

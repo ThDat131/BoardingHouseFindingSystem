@@ -9,20 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -66,16 +53,24 @@ public class Post implements Serializable {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
     private Set<Comment> commentSet;
     @JoinColumn(name = "roomId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Room roomId;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private User username;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
     private Set<Image> imageSet;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "postId")
-    private Set<PostOfTenant> postOfTenantSet;
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "post")
+    @PrimaryKeyJoinColumn
+    private PostOfTenant postOfTenant;
+
+    public PostOfTenant getPostOfTenant() {
+        return postOfTenant;
+    }
+
+    public void setPostOfTenant(PostOfTenant postOfTenant) {
+        this.postOfTenant = postOfTenant;
+    }
 
     public String getName() {
         return name;
@@ -153,15 +148,6 @@ public class Post implements Serializable {
 
     public void setImageSet(Set<Image> imageSet) {
         this.imageSet = imageSet;
-    }
-
-    @XmlTransient
-    public Set<PostOfTenant> getPostOfTenantSet() {
-        return postOfTenantSet;
-    }
-
-    public void setPostOfTenantSet(Set<PostOfTenant> postOfTenantSet) {
-        this.postOfTenantSet = postOfTenantSet;
     }
 
     @Override

@@ -1,3 +1,20 @@
 .post {
-    box-shadow: 0 0 6px 0px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 0 6px 0px rgba(0, 0, 0, 0.2);
+    height: 300px;
+}
+.img-post {
+    /* width: 240px; */
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.img-post > img {
+    object-fit: cover;
+    height: 150px;
+}
+
+.img-header {
+    height: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

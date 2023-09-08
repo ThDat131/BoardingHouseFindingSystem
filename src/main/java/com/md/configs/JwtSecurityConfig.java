@@ -98,12 +98,14 @@ public CorsConfigurationSource corsConfigurationSource() {
         http.authorizeRequests().antMatchers("/api/district/**").permitAll();
         http.authorizeRequests().antMatchers("/api/landlord-user/").permitAll();
         http.authorizeRequests().antMatchers("/api/tentant-user/").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "api/posts/**").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers(HttpMethod.DELETE, "/api/room/**").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers(HttpMethod.GET, "/api/rooms/").access("hasAnyRole('ROLE_0', 'ROLE_1', 'ROLE_2')")
                 .antMatchers("/api/follow/**").access("hasRole('ROLE_-1')")
+                .antMatchers("/api/post-tentant/").access("hasAnyRole('ROLE_-1')")
 //                .antMatchers("/api/activate/**").access("hasAnyRole('ROLE_1', 'ROLE_2')")
           /*      .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_-1') or hasRole('ROLE_0') or hasRole('ROLE_1') or hasRole('ROLE_2')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_0') or hasRole('ROLE_1')")
