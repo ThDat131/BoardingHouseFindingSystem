@@ -44,10 +44,10 @@ const PriceModal = ({isOpen, onClose, priceValue}) => {
                     <div className="modal-body">
                         <label htmlFor="priceMinRange" className="form-label">Giá thấp nhất: {minPrice}</label>
                         <input type="range" className="form-range" id="priceMinRange" min={0} max={10000000} 
-                            onChange={handleMinPriceSelected} step={500000}/>
+                            onChange={handleMinPriceSelected} step={100000}/>
                         <label htmlFor="priceMaxRange" className="form-label">Giá cao nhất: {maxPrice}</label>
                         <input type="range" className="form-range" id="priceMaxRange" min={0} max={10000000}
-                            onChange={handleMaxPriceSelected} step={500000} />
+                            onChange={handleMaxPriceSelected} step={100000} />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>

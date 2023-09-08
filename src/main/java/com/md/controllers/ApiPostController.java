@@ -8,9 +8,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.security.Principal;
 import java.util.*;
 
@@ -28,7 +33,13 @@ public class ApiPostController {
     private ImageService imageService;
     @Autowired
     private MessageSource messageSource;
-    @PostMapping(path ="/post", consumes = {
+    @Autowired
+    private FollowService followService;
+    @Autowired
+    private LandLordService landLordService;
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @PostMapping(path ="/post/", consumes = {
             MediaType.MULTIPART_FORM_DATA_VALUE
     })
     public ResponseEntity<Post> addPostLandLord(@RequestParam("name") String name,
@@ -60,6 +71,24 @@ public class ApiPostController {
                         this.imageService.addImage(i);
                     }
                 }
+                LandLord l = this.landLordService.getLandLordByUsername(user.getUsername());
+                List<Tentant> list = this.followService.getFollowerByLandLordId(l.getId());
+                if (list.size() > 0) {
+                    list.forEach(tentant -> {
+                        MimeMessage message = javaMailSender.createMimeMessage();
+                        try {
+                            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+                            helper.setTo(tentant.getEmail());
+                            helper.setSubject("Thông báo từ " + l.getFullName() + ": " + post.getName());
+                            helper.setText(post.getContent(), true);
+                            javaMailSender.send(message);
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    });
+                }
+
                 return new ResponseEntity<>(post, HttpStatus.CREATED);
             }
 
