@@ -100,10 +100,10 @@ const Header = () => {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link text-light" to={`/tin-tim-nha-tro`}>Tin thuê phòng trọ</Link>
+                        <Link className="nav-link text-light" to={`/tin-thue-nha-tro`}>Tin thuê phòng trọ</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link text-light" href="#">Tin tìm phòng trọ</a>
+                        <Link className="nav-link text-light" to={`/tin-tim-phong-tro`}>Tin tìm phòng trọ</Link>
                     </li>
                 </ul>
             </div>

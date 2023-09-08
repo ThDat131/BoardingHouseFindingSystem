@@ -67,6 +67,11 @@ public class TentantServiceImpl implements TentantService {
     }
 
     @Override
+    public List<Tentant> getTentantsInactive() {
+        return this.tentantRepository.getTentantsInactive();
+    }
+
+    @Override
     public Tentant addTentant(Map<String, String> params) {
         Tentant tentant = new Tentant();
 

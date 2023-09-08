@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './LocationModal.css'
 import { loadAllDistrictsByProvinceCode, loadAllProvinces, loadAllWardssByDistrictCode } from '../../services/ApiServices'
 import Loading from '../Loading/Loading'
-const LocationModal = ({isOpen, onClose, addressValue}) => {  
+const LocationModal = ({isOpen, onClose, addressValue, addressData}) => {  
 
 
     const [provinces, setProvinces] = useState([])
@@ -44,10 +44,12 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
     const handleDistrictChange = (event) => {
         setSelectedDistrictCode(event.target.value)
         setWards([])
+
     }
 
     const handleWardChange = (event) => {
         setSelectedWardCode(event.target.value)
+
     }
 
     const submitValue = () => {
@@ -67,9 +69,14 @@ const LocationModal = ({isOpen, onClose, addressValue}) => {
                 addressString += ward.fullName
             }
         })
-        
         addressValue(addressString)
+        addressData({
+            "province_id": selectedProvinceCode,
+            "district_id": selectedDistrictCode,
+            "ward_id": selectedWardCode
+        })
         onClose()
+
     }
 
     return <>

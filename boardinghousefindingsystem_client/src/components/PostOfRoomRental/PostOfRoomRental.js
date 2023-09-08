@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const PostOfRoomRental = ({postData}) => {
 
-    const imageUrls = postData.imageSet.map(image => image.url)
 
     // const htmlFormatted = DOMPurify.sanitize(postData.content, {
     //     USE_PROFILES: { html: true },
@@ -15,10 +14,10 @@ const PostOfRoomRental = ({postData}) => {
 
 
     return <>
-        <Link to={`/tin-tim-nha-tro/${postData.id}`} style={{color: '#000', textDecoration:'none'}}> 
+        <Link to={`/tin-thue-nha-tro/${postData.id}`} style={{color: '#000', textDecoration:'none'}}> 
             <div className="post d-flex justify-content-between align-items-center p-3 mb-3 rounded">
                 <div className="img-post col-4">
-                    <img className="w-100" src={imageUrls[0]} alt="" />
+                    <img className="w-100" src={postData.imageSet[0].url} alt="" />
                 </div>
                 <div className="info-post col-8 p-4">
                     <div className="name-post">
@@ -52,7 +51,7 @@ const PostOfRoomRental = ({postData}) => {
                                 <p className="m-0">Nhắn Zalo</p>
                             </div>
                             <div className="mobile btn btn-danger">
-                                <p className="m-0">Gọi 0768785291</p>
+                                <p className="m-0">Gọi {postData.username.landLord.phone}</p>
                             </div>
                         </div>
                     </div>

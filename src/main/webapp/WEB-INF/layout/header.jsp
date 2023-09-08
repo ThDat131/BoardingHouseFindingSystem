@@ -27,7 +27,8 @@
                         <li><a class="dropdown-item" href="<c:url value="/users" />">User</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/tentants" />">Người thuê trọ</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/landlords" />">Chủ trọ</a></li>
-                        <li><a class="dropdown-item" href="<c:url value="/landlords-inactivate" />">Kích hoạt chủ trọ</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/landlords-inactivate" />">Kích hoạt user chủ trọ</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/tentants-inactivate" />">Kích hoạt user thuê trọ</a></li>
 
                     </ul>
                 </li>

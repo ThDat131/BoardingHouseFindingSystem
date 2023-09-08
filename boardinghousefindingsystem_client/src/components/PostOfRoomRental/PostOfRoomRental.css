@@ -3,12 +3,6 @@
     overflow: hidden;
 }
 
-.img-post {
-    width: 240px;
-    height: 280px;
-    overflow: hidden;
-    object-fit: cover;
-}
 
 .name-post > h3 {
     color: red;

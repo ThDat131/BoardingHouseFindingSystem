@@ -79,7 +79,7 @@ const AddPostRental = () => {
         await addPostRentalRoom(formData).then((res) => {
             if (res.status === 201) {
                 setIsLoading(false)
-                navigate("/tin-tim-nha-tro")
+                navigate("/tin-thue-nha-tro")
             }
             else if (res.response.status === 400) {
                 const errors = res.response.data
@@ -116,7 +116,7 @@ const AddPostRental = () => {
                     <Editor
                         textareaName="content"
                         onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue="<p>This is the initial content of the editor.</p>"
+                        initialValue=""
                         init={{
                             height: 500,
                             menubar: false,

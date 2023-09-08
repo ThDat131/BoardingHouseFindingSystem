@@ -95,6 +95,7 @@ public class LandLordRepositoryImpl implements LandLordRepository {
             Query query = session.createQuery("SELECT distinct f FROM LandLord f left join fetch f.imageSet where f.username.isActive = false");
             return query.getResultList();
         } catch (HibernateException ex) {
+            ex.printStackTrace();
             return null;
         }
     }

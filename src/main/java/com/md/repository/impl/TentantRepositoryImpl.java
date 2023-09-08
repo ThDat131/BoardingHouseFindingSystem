@@ -1,5 +1,6 @@
 package com.md.repository.impl;
 
+import com.md.dto.StatInfo;
 import com.md.pojo.Tentant;
 import com.md.pojo.User;
 import com.md.repository.TentantRepository;
@@ -15,7 +16,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.xml.bind.PrintConversionEvent;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -74,6 +77,18 @@ public class TentantRepositoryImpl implements TentantRepository {
         catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<Tentant> getTentantsInactive() {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("FROM Tentant t WHERE t.username.isActive = false");
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 

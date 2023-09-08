@@ -8,8 +8,8 @@ import java.util.Map;
 
 public interface PostRepository {
     boolean addLandLordPost(Post post);
-
     List<Post> getPosts();
-
     Post getPostById(String id);
+    List<Post> getPostOfTentant();
+    List<Post> getPosts(Map<String, String> params);
 }

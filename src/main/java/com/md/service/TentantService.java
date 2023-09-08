@@ -15,7 +15,7 @@ public interface TentantService {
     boolean updateInfoTentant(Principal user, Tentant tentant);
     boolean updateTentant(Tentant tentant);
     boolean addTentant(Tentant tentant);
-
+    List<Tentant> getTentantsInactive();
     Tentant addTentant(Map<String, String> params);
     boolean addTentantUser(Map<String, String> params, MultipartFile avatar);
 

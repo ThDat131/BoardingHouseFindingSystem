@@ -129,9 +129,12 @@ const addPostRentalRoom = async(data) => {
     }
 };
 
-const getAllPost = async () => {
+const getAllPost = async (requestparms) => {
   try {
-    const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/posts`);
+    if (requestparms === undefined) {
+      requestparms = ""
+    }
+    const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/posts/?${requestparms}`);
     if (res.status === 200) {
       return res;
     }
@@ -289,6 +292,28 @@ const deleteFollow = async (landlordId) => {
   }
 }
 
+const getPostsTentant = async () => {
+  try {
+    const res = await axios.get(`${baseURL}${SERVER_CONTEXT}/api/posts-tentant/`)
+    return res
+  } catch (err) {
+    return err
+  }
+}
+
+const addPostTental = async(data) => {
+  try {
+    const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post-tentant/`, data, {
+      headers: {
+        Authorization: cookie.load("token")
+      }
+    })
+    return res
+  } catch(err) {
+    return err
+  }
+}
+
 export { 
   loadAllProvinces, 
   loadAllDistrictsByProvinceCode,
@@ -307,8 +332,10 @@ export {
   postRentalDetail,
   getLatLngAddress,
   getTentantDetails,
-    changeTentantDetails,
+  changeTentantDetails,
   addComment,
   addFollow,
   deleteFollow,
+  getPostsTentant,
+  addPostTental,
 }
