@@ -110,8 +110,8 @@ const Main = () => {
                             {
                                 posts.length <= 0 ? <h1>Không có nhà trọ nào</h1> : 
                                     posts.map((data, index) => {
-                                        return <div className="col-8 my-2">
-                                            <PostOfRoomRental key={index} postData={data} />
+                                        return <div className="col-8 my-2" key={index}>
+                                            <PostOfRoomRental postData={data} />
                                         </div>
                                     })
                             }

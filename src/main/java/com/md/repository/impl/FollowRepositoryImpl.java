@@ -1,6 +1,7 @@
 package com.md.repository.impl;
 
 import com.md.pojo.Follow;
+import com.md.pojo.Tentant;
 import com.md.repository.FollowRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -40,6 +42,20 @@ public class FollowRepositoryImpl implements FollowRepository {
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<Tentant> getFollowerByLandLordId(String id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT f.tenantId FROM Follow f WHERE f.landLordId.id =: id");
+            query.setParameter("id", id);
+            return query.getResultList();
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

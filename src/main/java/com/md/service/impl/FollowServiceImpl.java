@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -45,5 +46,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public boolean deleteFollow(String landLordId, String tentantId) {
         return followRepository.deleteFollow(landLordId,tentantId);
+    }
+
+    @Override
+    public List<Tentant> getFollowerByLandLordId(String id) {
+        return followRepository.getFollowerByLandLordId(id);
     }
 }

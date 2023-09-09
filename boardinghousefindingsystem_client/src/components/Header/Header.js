@@ -34,12 +34,6 @@ const Header = () => {
                     </div>
                     <div className="col-6 d-flex align-items-center justify-content-center">
                         <ul style={{marginBottom: 0}} className="d-flex align-items-center justify-content-center">
-                            <li className="mx-2">
-                                <a className="p-2 text-dark" style={decor_none} href="">
-                                    <i className="fa-solid fa-heart mx-1"></i>
-                                    Yêu thích
-                                </a>
-                            </li>
                             {
                                 user === null ? 
                                 <>

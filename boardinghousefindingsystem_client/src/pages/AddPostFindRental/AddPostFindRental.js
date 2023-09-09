@@ -13,10 +13,12 @@ const AddPostFindRental = () => {
     const [isLoading, setIsLoading] = useState(false)
     const editorRef = useRef(null);
     const navigate = useNavigate()
+    const processNotify = useRef(null)
 
     
     const handleFormSubmit = (evt) => {
         evt.preventDefault();
+        processNotify.current = toast.loading("Quá trình đăng bài đang được xử lý...")
         setIsLoading(true)
         const dataForm = {
             "name": evt.target.name.value,
@@ -26,8 +28,15 @@ const AddPostFindRental = () => {
         addPostTental(dataForm)
         .then(res => {
             if (res.status === 201) {
+                toast.update(processNotify.current, {
+                    render: "Đăng bài thành công",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                    closeOnClick: true
+                })
                 setIsLoading(false)
-                navigate("/tin-tim -nha-tro")
+                navigate("/tin-tim-phong-tro")
             }
             else if (res.response.status === 400) {
                 const errors = res.response.data
@@ -36,9 +45,15 @@ const AddPostFindRental = () => {
                     if (errors.hasOwnProperty(key))
                         errorsRes.push(...errors[key])
                 }
-
-                errorsRes.map(error => {
-                    return toast.error(error)
+                toast.update(processNotify.current, {
+                    render: "Thêm phòng thất bại",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                    closeOnClick: true
+                })
+                errorsRes.forEach((error) => {
+                    toast.error(error)
                 })
                 setIsLoading(false)
             }
@@ -73,8 +88,11 @@ const AddPostFindRental = () => {
                                 'bold italic backcolor | alignleft aligncenter ' +
                                 'alignright alignjustify | bullist numlist outdent indent | ' +
                                 'removeformat | help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                            encoding: 'raw',
+                            entity_encoding: 'raw'
                         }}
+                        apiKey="0mz34dd8eeink0dxfp3zxvup6y6q7m1u5jv0hupr5cb97w6l"
                     />
                 </div>
 
@@ -84,7 +102,7 @@ const AddPostFindRental = () => {
                 </div>
 
                 <div className="form-floating mb-3" style={{ textAlign: "center" }}>
-                    <button type="submit" className="btn btn-info my-3" style={{ minWidth: "200px" }}>
+                    <button type="submit" className="btn btn-info my-3" style={{ minWidth: "200px" }} disabled={isLoading} >
                         <span className="d-flex justify-content-center align-items-center gap-2">
                             <span>Đăng</span>
                             {
