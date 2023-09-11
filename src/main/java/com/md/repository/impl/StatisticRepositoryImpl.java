@@ -19,10 +19,10 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
     @Override
-    public List<StatInfo> countNumTentantByDate(Date from, Date to) {
+    public List<StatInfo> countNumTentantByMonth(Date from, Date to) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
-            Query query = session.createQuery("SELECT MONTH(u.createdDate), COUNT(u) FROM User u WHERE u.role = -1 AND u.createdDate BETWEEN :f AND :t GROUP BY MONTH(u.createdDate)");
+            Query query = session.createQuery("SELECT DATE_FORMAT(u.createdDate, '%m-%Y'), COUNT(u.id) FROM User u WHERE u.role = -1 AND u.createdDate BETWEEN :f AND :t GROUP BY DATE_FORMAT(u.createdDate, '%m-%Y') ORDER BY DATE_FORMAT(u.createdDate, '%m-%Y') asc");
             query.setParameter("f", from);
             query.setParameter("t", to);
             List<StatInfo> list = (List<StatInfo>) query.getResultList();
@@ -35,10 +35,106 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     }
 
     @Override
-    public List<StatInfo> countNumLandLordByDate(Date from, Date to) {
+    public List<StatInfo> countNumLandLordByMonth(Date from, Date to) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
-            Query query = session.createQuery("SELECT MONTH(u.createdDate), COUNT(u) FROM User u WHERE u.role = 0 AND u.createdDate BETWEEN :f AND :t GROUP BY MONTH(u.createdDate)");
+            Query query = session.createQuery("SELECT DATE_FORMAT(u.createdDate, '%m-%Y'), COUNT(u.id) FROM User u WHERE u.role = 0 AND u.createdDate BETWEEN :f AND :t GROUP BY DATE_FORMAT(u.createdDate, '%m-%Y') ORDER BY DATE_FORMAT(u.createdDate, '%m-%Y') asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByDay(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT DATE_FORMAT(u.createdDate, '%d-%m-%Y'), COUNT(u.id) FROM User u WHERE u.role = -1 AND u.createdDate BETWEEN :f AND :t GROUP BY DATE_FORMAT(u.createdDate, '%d-%m-%Y') ORDER BY DATE_FORMAT(u.createdDate, '%d-%m-%Y') asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByDay(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT DATE_FORMAT(u.createdDate, '%d-%m-%Y'), COUNT(u.id) FROM User u WHERE u.role = 0 AND u.createdDate BETWEEN :f AND :t GROUP BY DATE_FORMAT(u.createdDate, '%d-%m-%Y') ORDER BY DATE_FORMAT(u.createdDate, '%d-%m-%Y') asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByQuarter(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT QUARTER(u.createdDate), COUNT(u.id) FROM User u WHERE u.role = -1 AND u.createdDate BETWEEN :f AND :t GROUP BY QUARTER(u.createdDate), YEAR(u.createdDate) ORDER BY QUARTER(u.createdDate) asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByQuarter(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT QUARTER(u.createdDate), COUNT(u.id) FROM User u WHERE u.role = 0 AND u.createdDate BETWEEN :f AND :t GROUP BY QUARTER(u.createdDate), YEAR(u.createdDate) ORDER BY QUARTER(u.createdDate) asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByYear(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT YEAR(u.createdDate), COUNT(u.id) FROM User u WHERE u.role = -1 AND u.createdDate BETWEEN :f AND :t GROUP BY YEAR(u.createdDate) ORDER BY YEAR(u.createdDate) asc");
+            query.setParameter("f", from);
+            query.setParameter("t", to);
+            List<StatInfo> list = (List<StatInfo>) query.getResultList();
+            return list;
+        }
+        catch (HibernateException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByYear(Date from, Date to) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query query = session.createQuery("SELECT YEAR(u.createdDate), COUNT(u.id) FROM User u WHERE u.role = 0 AND u.createdDate BETWEEN :f AND :t GROUP BY YEAR(u.createdDate) ORDER BY YEAR(u.createdDate) asc");
             query.setParameter("f", from);
             query.setParameter("t", to);
             List<StatInfo> list = (List<StatInfo>) query.getResultList();

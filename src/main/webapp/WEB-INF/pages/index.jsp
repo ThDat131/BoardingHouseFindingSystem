@@ -14,13 +14,19 @@
     <div class="d-flex align-items-center gap-5 my-3">
         <div class="d-flex gap-2 ">
             <p class="mb-0">Năm bắt đầu</p>
-            <input id="yf" type="number"/>
+            <input id="yf" type="date"/>
         </div>
         <div class="d-flex gap-2 ">
             <p class="mb-0">Năm kết thúc</p>
-            <input id="yt" type="number" />
+            <input id="yt" type="date" />
         </div>
         <button class="btn btn-info" onclick="handleShowUserStas(`${endpointTentant}`, `${endpointLandlord}`)">Thống kê</button>
+        <div class="d-flex align-items-center justify-content-center gap-3">
+            <button class="btn btn-info" onclick="generateChart('day')">Theo ngày</button>
+            <button class="btn btn-info" onclick="generateChart('month')">Theo tháng</button>
+            <button class="btn btn-info" onclick="generateChart('quarter')">Theo quý</button>
+            <button class="btn btn-info" onclick="generateChart('year')">Theo năm</button>
+        </div>
     </div>
     <div class="row my-3">
         <div class="col-6">

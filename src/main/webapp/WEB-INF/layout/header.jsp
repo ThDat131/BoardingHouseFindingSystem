@@ -10,7 +10,9 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Logo</a>
+        <a class="navbar-brand" href="<c:url value="/" />">
+            <img src="https://res.cloudinary.com/dgyytgkae/image/upload/v1694272180/Phong_Tro_MD-logos_white_zwkfhe.png" width="60" height="60"/>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,15 +43,6 @@
                         <li><a class="dropdown-item" href="#">Bình luận</a></li>
                         <li><a class="dropdown-item" href="#">Follow</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý phòng trọ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý hình ảnh</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý thông báo</a>
                 </li>
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
