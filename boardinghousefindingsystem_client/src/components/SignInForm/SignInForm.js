@@ -65,7 +65,7 @@ const SignInForm = () => {
             </Link>
             <h6 className="link-to__forgot-pass">Quên mật khẩu</h6>
           </div>
-          <button type="submit" className="btn-signin p-3">
+          <button type="submit" className="btn-signin p-3" disabled={isLoading}>
             <div className="d-flex gap-2 justify-content-center align-items-center">
               <span>Đăng nhập</span>
               {isLoading ? <Loading /> : ""}

@@ -243,7 +243,7 @@ const SignUpForm = () => {
           <div className="host-info-container">
             {role === "0" && <SignUpHost addressData={handleAddressData} filesData={handleFilesData} />}
           </div>
-          <button type="submit" className="btn-signup">
+          <button type="submit" className="btn-signup" disabled={isLoading}>
             <div className="d-flex gap-2 justify-content-center align-items-center">
               <span>Đăng ký</span>
               {isLoading ? <Loading /> : ""}

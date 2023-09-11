@@ -116,7 +116,7 @@ const getRoomById = async (id) => {
 
 const addPostRentalRoom = async(data) => {
     try {
-        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post`, data, {
+        const res = await axios.post(`${baseURL}${SERVER_CONTEXT}/api/post/`, data, {
             headers: {
                 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 'Authorization': cookie.load("token")

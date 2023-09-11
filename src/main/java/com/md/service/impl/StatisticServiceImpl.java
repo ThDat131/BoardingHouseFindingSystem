@@ -14,12 +14,42 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     private StatisticRepository statisticRepository;
     @Override
-    public List<StatInfo> countNumTentantByDate(Date from, Date to) {
-        return statisticRepository.countNumTentantByDate(from, to);
+    public List<StatInfo> countNumTentantByMonth(Date from, Date to) {
+        return statisticRepository.countNumTentantByMonth(from, to);
     }
 
     @Override
-    public List<StatInfo> countNumLandLordByDate(Date from, Date to) {
-        return statisticRepository.countNumLandLordByDate(from, to);
+    public List<StatInfo> countNumLandLordByMonth(Date from, Date to) {
+        return statisticRepository.countNumLandLordByMonth(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByDay(Date from, Date to) {
+        return statisticRepository.countNumTentantByDay(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByDay(Date from, Date to) {
+        return statisticRepository.countNumLandLordByDay(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByQuarter(Date from, Date to) {
+        return statisticRepository.countNumTentantByQuarter(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByQuarter(Date from, Date to) {
+        return statisticRepository.countNumLandLordByQuarter(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumTentantByYear(Date from, Date to) {
+        return statisticRepository.countNumTentantByYear(from, to);
+    }
+
+    @Override
+    public List<StatInfo> countNumLandLordByYear(Date from, Date to) {
+        return statisticRepository.countNumLandLordByYear(from, to);
     }
 }
